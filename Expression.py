@@ -32,14 +32,3 @@ class Expression:
 
 
 
-
-
-
-
-
-
-
-
-expression = "52×74+15÷6-2^√2"
-new_exp = Expression(expression)
-new_exp.translatate_expression()
