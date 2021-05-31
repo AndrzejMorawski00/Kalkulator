@@ -173,7 +173,7 @@ class MyWindow(QMainWindow):
                                self.button_height)
         self.b_dot.clicked.connect(lambda: self.clicked_button_expression("."))
 
-        # Foutrh Column
+        # Fourth Column
 
         self.b_del = QtWidgets.QPushButton(self)
         self.b_del.setText("DEL")
@@ -217,7 +217,7 @@ class MyWindow(QMainWindow):
         self.b_eq.clicked.connect(lambda: self.clicked_button_result("="))
 
 
-        #
+
 
     def clicked_button_expression(self, arg):       #Arguments to calculator
         print("expression/act " + str(arg))
