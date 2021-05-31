@@ -1,8 +1,8 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
+import Expression
 import sys
-
 
 
 class MyWindow(QMainWindow):
@@ -11,10 +11,13 @@ class MyWindow(QMainWindow):
         self.button_height = 70
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)
-        self.experssion = ""
-        self.k = 120
-        self.result = ""
 
+        self.k = 120
+
+        self.result = ""
+        self.experssion = ""
+        self.ans_val = ""
+        self.first_use = False
 
         super(MyWindow, self).__init__()
         self.setGeometry(200, 200, 4 * self.button_width, 9 * self.button_height - 10)
@@ -110,7 +113,7 @@ class MyWindow(QMainWindow):
         self.b_8.setText("8")
         self.b_8.setFont(self.font)
         self.b_8.setGeometry(self.button_width, self.k + 2 * self.button_height, self.button_width, self.button_height)
-        self.b_8.clicked.connect(lambda: self.clicked_button_expression("1"))
+        self.b_8.clicked.connect(lambda: self.clicked_button_expression("8"))
 
         self.b_5 = QtWidgets.QPushButton(self)
         self.b_5.setText("5")
@@ -216,30 +219,70 @@ class MyWindow(QMainWindow):
                               self.button_height)
         self.b_eq.clicked.connect(lambda: self.clicked_button_result("="))
 
-
-
-
-    def clicked_button_expression(self, arg):       #Arguments to calculator
+    def clicked_button_expression(self, arg):  # Arguments to calculator
         print("expression/act " + str(arg))
-        self.experssion += str(arg)
+
+        if (self.experssion.find("x") == -1):
+            self.experssion += arg
+        elif (self.experssion.find("x") != -1):
+
+            if (len(arg) == 1 and 48 <= ord(arg) and ord(arg) <= 57):
+
+                self.experssion = self.experssion.replace("x", arg)
+                print(self.experssion)
+
+            elif (arg == self.ans_val):
+                print("DDD")
+                self.experssion = self.experssion.replace("x", arg)
+                print(self.experssion)
+
+            else:
+                self.experssion += arg
+
         self.text_box.setText(self.experssion)
 
-    def clicked_button_calculator(self, arg):       #Switching windows
+    def clicked_button_calculator(self, arg):  # Switching windows
         print("Switch window " + str(arg))
 
-    def clicked_button_result(self, arg):           #EQ button
-        print("Result " + str(arg))
+    def clicked_button_result(self, arg):  # EQ button
+        if (self.first_use == False):
+            self.experssion_class = Expression.Expression(self.experssion)
+            self.experssion_class.translatate_expression()
+            self.result = self.experssion_class.evaluate_expression()
+            self.text_box.setText(self.result)
+            self.ans_val = self.result
+            self.experssion = self.result
 
-    def clicked_button_ans(self):                   #Ans button
-        print(self.experssion)
+            self.first_use = True
+        else:
+            self.experssion_class.update(self.experssion)
+            self.experssion_class.translatate_expression()
+            self.result = self.experssion_class.evaluate_expression()
+            self.text_box.setText(self.result)
+            self.ans_val = self.result
+            self.experssion = self.result
 
-    def clicked_button_operation(self, arg):        #Other operations
-        print("Operation " + str(arg))
+    def clicked_button_ans(self):  # Ans button
+        print("ANS val:", self.ans_val)
 
+        if (self.experssion.find("x") != -1):
+            self.experssion = self.experssion.replace("x", self.ans_val)
+        else:
+            self.experssion += self.ans_val
 
+        self.text_box.setText(self.experssion)
 
+    def clicked_button_operation(self, arg):  # Other operations
+        if (len(self.experssion) != 0):
+            if (arg == "DEL"):
+                self.experssion = self.experssion[0: len(self.experssion) - 1]
+            elif (arg == "C"):
+                self.experssion = ""
+            elif (arg == "CE"):
+                self.experssion = ""
+                self.ans_val = ""
 
-
+        self.text_box.setText((self.experssion))
 
 
 def window():
@@ -247,7 +290,6 @@ def window():
     win = MyWindow()
     win.show()
     app.exec_()
-
 
 
 window()
