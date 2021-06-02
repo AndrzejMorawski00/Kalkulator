@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
-import Expression
+import Standard_Expression
 import sys
 
 
@@ -17,11 +17,11 @@ class MyWindow(QMainWindow):
         self.result = ""
         self.experssion = ""
         self.ans_val = ""
-        self.first_use = False
+        self.first_use = True
 
         super(MyWindow, self).__init__()
         self.setGeometry(200, 200, 4 * self.button_width, 9 * self.button_height - 10)
-        self.setWindowTitle("Kalkulator")
+        self.setWindowTitle("Calculator")
         self.initUI()
 
     def initUI(self):
@@ -222,38 +222,39 @@ class MyWindow(QMainWindow):
     def clicked_button_expression(self, arg):  # Arguments to calculator
         print("expression/act " + str(arg))
 
-        if (self.experssion.find("x") == -1):
-            self.experssion += arg
-        elif (self.experssion.find("x") != -1):
-
-            if (len(arg) == 1 and 48 <= ord(arg) and ord(arg) <= 57):
-
-                self.experssion = self.experssion.replace("x", arg)
-                print(self.experssion)
-
-            elif (arg == self.ans_val):
-                print("DDD")
-                self.experssion = self.experssion.replace("x", arg)
-                print(self.experssion)
-
-            else:
+        if (len(self.experssion) < 49):
+            if (self.experssion.find("x") == -1):
                 self.experssion += arg
+            elif (self.experssion.find("x") != -1):
 
-        self.text_box.setText(self.experssion)
+                if (len(arg) == 1 and 48 <= ord(arg) and ord(arg) <= 57):
+
+                    self.experssion = self.experssion.replace("x", arg, 1)
+                    print(self.experssion)
+
+                elif (arg == self.ans_val):
+
+                    self.experssion = self.experssion.replace("x", arg)
+                    print(self.experssion)
+
+                else:
+                    self.experssion += arg
+
+            self.text_box.setText(self.experssion)
 
     def clicked_button_calculator(self, arg):  # Switching windows
         print("Switch window " + str(arg))
 
     def clicked_button_result(self, arg):  # EQ button
-        if (self.first_use == False):
-            self.experssion_class = Expression.Expression(self.experssion)
+        if (self.first_use == True):
+            self.experssion_class = Standard_Expression.Expression(self.experssion)
             self.experssion_class.translatate_expression()
             self.result = self.experssion_class.evaluate_expression()
             self.text_box.setText(self.result)
             self.ans_val = self.result
             self.experssion = self.result
 
-            self.first_use = True
+            self.first_use = False
         else:
             self.experssion_class.update(self.experssion)
             self.experssion_class.translatate_expression()
