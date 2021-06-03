@@ -118,10 +118,10 @@ class MyWindow(QMainWindow):
         self.log_n.clicked.connect(lambda: self.clicked_button_expression("log"))
 
         self.log_x_y = QtWidgets.QPushButton(self)
-        self.log_x_y.setText("logxy")
+        self.log_x_y.setText("n!")
         self.log_x_y.setFont(self.font)
         self.log_x_y.setGeometry(0, 8 * self.button_height, self.button_width, self.button_height)
-        self.log_x_y.clicked.connect(lambda: self.clicked_button_expression("logxy"))
+        self.log_x_y.clicked.connect(lambda: self.clicked_button_expression("n!"))
 
         self.b_ln = QtWidgets.QPushButton(self)
         self.b_ln.setText("ln")
@@ -237,11 +237,11 @@ class MyWindow(QMainWindow):
         self.b_ce.setGeometry(3 * self.button_width, 4 * self.button_height, self.button_width, self.button_height)
         self.b_ce.clicked.connect(lambda: self.clicked_button_operation("CE"))
 
-        self.n_fact = QtWidgets.QPushButton(self)
-        self.n_fact.setText("n!")
-        self.n_fact.setFont(self.font)
-        self.n_fact.setGeometry(3 * self.button_width, 5 * self.button_height, self.button_width, self.button_height)
-        self.n_fact.clicked.connect(lambda: self.clicked_button_expression("n!"))
+        self.floor = QtWidgets.QPushButton(self)
+        self.floor.setText("_")
+        self.floor.setFont(self.font)
+        self.floor.setGeometry(3 * self.button_width, 5 * self.button_height, self.button_width, self.button_height)
+        self.floor.clicked.connect(lambda: self.clicked_button_expression("_"))
 
         self.b_9 = QtWidgets.QPushButton(self)
         self.b_9.setText("9")
@@ -352,8 +352,9 @@ class MyWindow(QMainWindow):
             self.root_2.show()
             self.root_3.hide()
 
-            self.pow_1_n.show()
-            self.pow_n.hide()
+            self.pow_n.show()
+            self.pow_1_n.hide()
+
 
             self.ten_pow.show()
             self.two_pow.hide()
@@ -364,8 +365,17 @@ class MyWindow(QMainWindow):
             self.b_ln.show()
             self.b_e_x.hide()
 
-    def clicked_button_operation(self, arg):
-        print("Clicked operation button!!! ")
+    def clicked_button_operation(self, arg):  # Other operations
+        if (len(self.experssion) != 0):
+            if (arg == "DEL"):
+                self.experssion = self.experssion[0: len(self.experssion) - 1]
+            elif (arg == "C"):
+                self.experssion = ""
+            elif (arg == "CE"):
+                self.experssion = ""
+                self.ans_val = ""
+
+        self.text_box.setText((self.experssion))
 
     def clicked_button_expression(self, arg):
         print("Clicked expression!!! " + arg)
@@ -375,13 +385,35 @@ class MyWindow(QMainWindow):
         self.text_box.setText(self.experssion)
 
     def clicked_button_abs(self):
-        print("Clikced abs!!!")
+        print(self.experssion)
+        abs_val = self.experssion
+        try:
+            abs_val = float(abs_val)
+            abs_val = abs(abs_val)
+            self.text_box.setText(abs_val)
+            abs_val = ""
+        except: self.text_box.setText("")
 
-    def clicked_button_ans(self):
-        print("Clicked ans!!!")
+    def clicked_button_ans(self):  # Ans button
+        print("ANS val:", self.ans_val)
 
-    def clicked_button_result(self):
-        print("Cliecked result!!!")
+        if (self.experssion.find("x") != -1):
+            self.experssion = self.experssion.replace("x", self.ans_val)
+        else:
+            self.experssion += self.ans_val
+
+        self.text_box.setText(self.experssion)
+
+    def clicked_button_result(self, arg):  # EQ button
+        if (self.first_use == True):
+            self.experssion_class = Standard_Expression.Expression(self.experssion)
+            self.experssion_class.translatate_expression()
+            self.result = self.experssion_class.evaluate_expression()
+            self.text_box.setText(self.result)
+            self.ans_val = self.result
+            self.experssion = self.result
+
+            self.first_use = False
 
 
 def window():
