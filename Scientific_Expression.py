@@ -6,8 +6,8 @@ class Expression:
 
     def __init__(self, expression):
         self.expression = expression
-        self.e = "2.7192"
-        self.pi = "3.1415"
+        self.e = str(math.e)
+        self.pi = str(math.pi)
 
     def update(self, new_expression):
         self.expression = new_expression
@@ -15,13 +15,35 @@ class Expression:
     def translate_expression(self):
         self.expression = self.expression.replace('×', '*')
         self.expression = self.expression.replace('÷', '/')
-        self.expression = self.expression.replace('^', '**')
+        self.translate_pow()
+        self.expression = self.expression.replace("^", "**")
         self.expression = self.expression.replace("e", self.e)
         self.expression = self.expression.replace("π", self.pi)
 
         self.translate_roots()
         self.translate_logs()
         self.translate_fact()
+
+    def translate_pow(self):
+
+        while (self.expression.find("^1/") != -1):
+            idx = self.expression.find("^1/") + 3
+            new_number = ""
+            start_idx = idx
+            end_idx = idx
+
+            while (idx < len(self.expression) and (
+                    (48 <= ord(self.expression[idx]) <= 57) or self.expression[idx] == ".")):
+                new_number += self.expression[idx]
+                end_idx += 1
+                idx += 1
+            exp_1 = self.expression[0: start_idx]
+            exp_2 = self.expression[start_idx: len(self.expression)]
+            exp_2 = exp_2.replace(new_number, new_number + ")", 1)
+
+            self.expression = exp_1 + exp_2
+
+            self.expression = self.expression.replace("^1/", "**(1/", 1)
 
     def translate_roots(self):
         while (self.expression.find("3√") != -1):
@@ -34,11 +56,7 @@ class Expression:
                 new_number += self.expression[idx]
                 idx += 1
 
-            temp_idx = self.expression.find(new_number)
-            exp_1 = self.expression[0: temp_idx + len(new_number)]
-
-            exp_2 = self.expression[temp_idx + len(new_number): len(self.expression)]
-            self.expression = exp_1 + "**(1/3)" + exp_2
+            self.expression = self.expression.replace(new_number, new_number + "**(1/3)", 1)
             self.expression = self.expression.replace("3√", "", 1)
 
         while (self.expression.find("√") != -1):
@@ -50,11 +68,7 @@ class Expression:
                 new_number += self.expression[idx]
                 idx += 1
 
-            temp_idx = self.expression.find(new_number)
-            exp_1 = self.expression[0: temp_idx + len(new_number)]
-
-            exp_2 = self.expression[temp_idx + len(new_number): len(self.expression)]
-            self.expression = exp_1 + "**(1/2)" + exp_2
+            self.expression = self.expression.replace(new_number, new_number + "**(1/2)", 1)
             self.expression = self.expression.replace("√", "", 1)
 
     def translate_fact(self):
@@ -124,7 +138,7 @@ class Expression:
         return result
 
     def get_expression(self):
-        return self.expression
+        print(self.expression)
 
     def evaluate_expression(self):
         try:
@@ -134,10 +148,9 @@ class Expression:
             return "ERROR"
 
 
-ex = "√4+3√27+3√64+5!-lne*log5_25"
+k = "5^1/5+4^1/43423423+4^1/3123"
 
-new = Expression(ex)
-new.translate_expression()
-print(new.get_expression())
-print(new.evaluate_expression())
-
+k = Expression(k)
+k.translate_expression()
+k.get_expression()
+print(k.evaluate_expression())

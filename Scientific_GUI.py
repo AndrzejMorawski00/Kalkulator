@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
-import Standard_Expression
+import Scientific_Expression
 import sys
 
 
@@ -67,49 +67,49 @@ class MyWindow(QMainWindow):
         self.pow_2.setText("x^2")
         self.pow_2.setFont(self.font)
         self.pow_2.setGeometry(0, 4 * self.button_height, self.button_width, self.button_height)
-        self.pow_2.clicked.connect(lambda: self.clicked_button_expression("x^2"))
+        self.pow_2.clicked.connect(lambda: self.clicked_button_expression("^2"))
 
         self.pow_3 = QtWidgets.QPushButton(self)
         self.pow_3.setText("x^3")
         self.pow_3.setFont(self.font)
         self.pow_3.setGeometry(0, 4 * self.button_height, self.button_width, self.button_height)
-        self.pow_3.clicked.connect(lambda: self.clicked_button_expression("x^3"))
+        self.pow_3.clicked.connect(lambda: self.clicked_button_expression("^3"))
 
         self.root_2 = QtWidgets.QPushButton(self)
         self.root_2.setText("√x")
         self.root_2.setFont(self.font)
         self.root_2.setGeometry(0, 5 * self.button_height, self.button_width, self.button_height)
-        self.root_2.clicked.connect(lambda: self.clicked_button_expression("√x"))
+        self.root_2.clicked.connect(lambda: self.clicked_button_expression("√"))
 
         self.root_3 = QtWidgets.QPushButton(self)
         self.root_3.setText("3√x")
         self.root_3.setFont(self.font)
         self.root_3.setGeometry(0, 5 * self.button_height, self.button_width, self.button_height)
-        self.root_3.clicked.connect(lambda: self.clicked_button_expression("3√x"))
+        self.root_3.clicked.connect(lambda: self.clicked_button_expression("3√"))
 
         self.pow_n = QtWidgets.QPushButton(self)
         self.pow_n.setText("x^y")
         self.pow_n.setFont(self.font)
         self.pow_n.setGeometry(0, 6 * self.button_height, self.button_width, self.button_height)
-        self.pow_n.clicked.connect(lambda: self.clicked_button_expression("x^y"))
+        self.pow_n.clicked.connect(lambda: self.clicked_button_expression("^"))
 
         self.pow_1_n = QtWidgets.QPushButton(self)
         self.pow_1_n.setText("x^1/y")
         self.pow_1_n.setFont(self.font)
         self.pow_1_n.setGeometry(0, 6 * self.button_height, self.button_width, self.button_height)
-        self.pow_1_n.clicked.connect(lambda: self.clicked_button_expression("x^1/y"))
+        self.pow_1_n.clicked.connect(lambda: self.clicked_button_expression("^1/"))
 
         self.ten_pow = QtWidgets.QPushButton(self)
         self.ten_pow.setText("10^x")
         self.ten_pow.setFont(self.font)
         self.ten_pow.setGeometry(0, 7 * self.button_height, self.button_width, self.button_height)
-        self.ten_pow.clicked.connect(lambda: self.clicked_button_expression("10^x"))
+        self.ten_pow.clicked.connect(lambda: self.clicked_button_expression("10^"))
 
         self.two_pow = QtWidgets.QPushButton(self)
         self.two_pow.setText("2^x")
         self.two_pow.setFont(self.font)
         self.two_pow.setGeometry(0, 7 * self.button_height, self.button_width, self.button_height)
-        self.two_pow.clicked.connect(lambda: self.clicked_button_expression("2^x"))
+        self.two_pow.clicked.connect(lambda: self.clicked_button_expression("2^"))
 
         self.log_n = QtWidgets.QPushButton(self)
         self.log_n.setText("log")
@@ -121,7 +121,7 @@ class MyWindow(QMainWindow):
         self.log_x_y.setText("n!")
         self.log_x_y.setFont(self.font)
         self.log_x_y.setGeometry(0, 8 * self.button_height, self.button_width, self.button_height)
-        self.log_x_y.clicked.connect(lambda: self.clicked_button_expression("n!"))
+        self.log_x_y.clicked.connect(lambda: self.clicked_button_expression("!"))
 
         self.b_ln = QtWidgets.QPushButton(self)
         self.b_ln.setText("ln")
@@ -133,7 +133,7 @@ class MyWindow(QMainWindow):
         self.b_e_x.setText("e^x")
         self.b_e_x.setFont(self.font)
         self.b_e_x.setGeometry(0, 9 * self.button_height, self.button_width, self.button_height)
-        self.b_e_x.clicked.connect(lambda: self.clicked_button_expression("e^x"))
+        self.b_e_x.clicked.connect(lambda: self.clicked_button_expression("e^"))
 
         # Second column
 
@@ -147,7 +147,7 @@ class MyWindow(QMainWindow):
         self.b_inv.setText("1/x")
         self.b_inv.setFont(self.font)
         self.b_inv.setGeometry(1 * self.button_width, 4 * self.button_height, self.button_width, self.button_height)
-        self.b_inv.clicked.connect(lambda: self.clicked_button_expression("1/x"))
+        self.b_inv.clicked.connect(lambda: self.clicked_button_expression("1/"))
 
         self.l_bracket = QtWidgets.QPushButton(self)
         self.l_bracket.setText("(")
@@ -309,14 +309,14 @@ class MyWindow(QMainWindow):
         self.b_eq.setText("=")
         self.b_eq.setFont(self.font)
         self.b_eq.setGeometry(4 * self.button_width, 9 * self.button_height, self.button_width, self.button_height)
-        self.b_eq.clicked.connect(lambda: self.clicked_button_result())
+        self.b_eq.clicked.connect(lambda: self.clicked_button_result("="))
 
         # Functions
 
     def clicked_button(self):
         print("Clicked button!!!")
 
-        # Clicked function (Switch ln -> e ^ x)
+
 
     def clicked_button_switch(self):  # Default switch is False
 
@@ -405,16 +405,25 @@ class MyWindow(QMainWindow):
         self.text_box.setText(self.experssion)
 
     def clicked_button_result(self, arg):  # EQ button
-        if (self.first_use == True):
-            self.experssion_class = Standard_Expression.Expression(self.experssion)
-            self.experssion_class.translatate_expression()
-            self.result = self.experssion_class.evaluate_expression()
+        if (self.first_use == False):
+            self.expression_class = Scientific_Expression.Expression(self.experssion)
+            self.expression_class.get_expression()
+            self.expression_class.translate_expression()
+            self.expression_class.get_expression()
+            self.result = self.expression_class.evaluate_expression()
             self.text_box.setText(self.result)
             self.ans_val = self.result
             self.experssion = self.result
+            self.first_use = True
+        else:
 
-            self.first_use = False
-
+            self.expression_class.update(self.experssion)
+            self.expression_class.translate_expression()
+            self.expression_class.get_expression()
+            self.result = self.expression_class.evaluate_expression()
+            self.text_box.setText(self.result)
+            self.ans_val = self.result
+            self.experssion = self.result
 
 def window():
     app = QApplication(sys.argv)

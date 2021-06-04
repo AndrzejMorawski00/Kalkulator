@@ -69,7 +69,7 @@ class MyWindow(QMainWindow):
         self.b_inv.setText("1/x")
         self.b_inv.setFont(self.font)
         self.b_inv.setGeometry(0, self.k + self.button_height, self.button_width, self.button_height)
-        self.b_inv.clicked.connect(lambda: self.clicked_button_expression("1/x"))
+        self.b_inv.clicked.connect(lambda: self.clicked_button_expression("1/"))
 
         self.b_7 = QtWidgets.QPushButton(self)
         self.b_7.setText("7")
@@ -107,7 +107,7 @@ class MyWindow(QMainWindow):
         self.b_pow_2.setText("x^2")
         self.b_pow_2.setFont(self.font)
         self.b_pow_2.setGeometry(self.button_width, self.k + self.button_height, self.button_width, self.button_height)
-        self.b_pow_2.clicked.connect(lambda: self.clicked_button_expression("x^2"))
+        self.b_pow_2.clicked.connect(lambda: self.clicked_button_expression("^2"))
 
         self.b_8 = QtWidgets.QPushButton(self)
         self.b_8.setText("8")
@@ -146,7 +146,7 @@ class MyWindow(QMainWindow):
         self.b_sq_root.setFont(self.font)
         self.b_sq_root.setGeometry(2 * self.button_width, self.k + self.button_height, self.button_width,
                                    self.button_height)
-        self.b_sq_root.clicked.connect(lambda: self.clicked_button_expression("√x"))
+        self.b_sq_root.clicked.connect(lambda: self.clicked_button_expression("√"))
 
         self.b_9 = QtWidgets.QPushButton(self)
         self.b_9.setText("9")
@@ -222,25 +222,10 @@ class MyWindow(QMainWindow):
     def clicked_button_expression(self, arg):  # Arguments to calculator
         print("expression/act " + str(arg))
 
-        if (len(self.experssion) < 49):
-            if (self.experssion.find("x") == -1):
-                self.experssion += arg
-            elif (self.experssion.find("x") != -1):
+        if (len(self.experssion + arg) < 49):
+            self.experssion = self.experssion + arg
 
-                if (len(arg) == 1 and 48 <= ord(arg) and ord(arg) <= 57):
-
-                    self.experssion = self.experssion.replace("x", arg, 1)
-                    print(self.experssion)
-
-                elif (arg == self.ans_val):
-
-                    self.experssion = self.experssion.replace("x", arg)
-                    print(self.experssion)
-
-                else:
-                    self.experssion += arg
-
-            self.text_box.setText(self.experssion)
+        self.text_box.setText(self.experssion)
 
     def clicked_button_calculator(self, arg):  # Switching windows
         print("Switch window " + str(arg))
@@ -248,7 +233,7 @@ class MyWindow(QMainWindow):
     def clicked_button_result(self, arg):  # EQ button
         if (self.first_use == True):
             self.experssion_class = Standard_Expression.Expression(self.experssion)
-            self.experssion_class.translatate_expression()
+            self.experssion_class.translate_expression()
             self.result = self.experssion_class.evaluate_expression()
             self.text_box.setText(self.result)
             self.ans_val = self.result
@@ -257,7 +242,7 @@ class MyWindow(QMainWindow):
             self.first_use = False
         else:
             self.experssion_class.update(self.experssion)
-            self.experssion_class.translatate_expression()
+            self.experssion_class.translate_expression()
             self.result = self.experssion_class.evaluate_expression()
             self.text_box.setText(self.result)
             self.ans_val = self.result
@@ -265,12 +250,6 @@ class MyWindow(QMainWindow):
 
     def clicked_button_ans(self):  # Ans button
         print("ANS val:", self.ans_val)
-
-        if (self.experssion.find("x") != -1):
-            self.experssion = self.experssion.replace("x", self.ans_val)
-        else:
-            self.experssion += self.ans_val
-
         self.text_box.setText(self.experssion)
 
     def clicked_button_operation(self, arg):  # Other operations

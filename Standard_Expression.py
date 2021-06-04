@@ -3,17 +3,42 @@ class Expression:
     def __init__(self, expression):
         self.expression = expression
 
-    def translatate_expression(self):
+    def translate_expression(self):
         self.expression = self.expression.replace('×', '*')
         self.expression = self.expression.replace('÷', '/')
+        self.expression = self.expression.replace("^1/", "**(1/)")
         self.expression = self.expression.replace('^', '**')
 
+        self.translate_roots()
+
+
+
+
+    def translate_roots(self):
+        while (self.expression.find("3√") != -1):
+
+            idx = self.expression.find("3√") + 2
+            new_number = ""
+
+            while (idx < len(self.expression) and (
+                    (48 <= ord(self.expression[idx]) <= 57) or self.expression[idx] == ".")):
+                new_number += self.expression[idx]
+                idx += 1
+
+            self.expression = self.expression.replace(new_number, new_number + "**(1/3)", 1)
+            self.expression = self.expression.replace("3√", "", 1)
+
         while (self.expression.find("√") != -1):
-            idx = self.expression.find("√")
-            self.expression = self.expression.replace("√", "")
-            exp_1 = self.expression[0: idx]
-            exp_2 = self.expression[idx: len(self.expression)] + "**0.5"
-            self.expression = exp_1 + exp_2
+            idx = self.expression.find("√") + 1
+            new_number = ""
+
+            while (idx < len(self.expression) and (
+                    (48 <= ord(self.expression[idx]) <= 57) or self.expression[idx] == ".")):
+                new_number += self.expression[idx]
+                idx += 1
+
+            self.expression = self.expression.replace(new_number, new_number + "**(1/2)", 1)
+            self.expression = self.expression.replace("√", "", 1)
 
     def update(self, new_expression):
         self.expression = new_expression
@@ -28,3 +53,5 @@ class Expression:
             return self.expression
         except:
             return "ERROR"
+
+
