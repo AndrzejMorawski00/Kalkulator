@@ -1,13 +1,18 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
+from PyQt5.QtCore import *
 import Standard_Expression
 import sys
 
+import Scientific_GUI
+import Programmer_GUI
+import Converter_GUI
 
 class MyWindow(QMainWindow):
 
     def __init__(self):
+        super(MyWindow, self).__init__()
         self.button_height = 70
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)
@@ -19,7 +24,7 @@ class MyWindow(QMainWindow):
         self.ans_val = ""
         self.first_use = True
 
-        super(MyWindow, self).__init__()
+
         self.setGeometry(200, 200, 4 * self.button_width, 9 * self.button_height - 10)
         self.setWindowTitle("Calculator")
         self.initUI()
@@ -34,26 +39,20 @@ class MyWindow(QMainWindow):
         self.b_sci = QtWidgets.QPushButton(self)
         self.b_sci.setText("Scientific")
         self.b_sci.setFont(self.font)
-        self.b_sci.setGeometry(0, 0, self.button_width, self.button_height)
-        self.b_sci.clicked.connect(lambda: self.clicked_button_calculator("S"))
+        self.b_sci.setGeometry(0, 0, 160, self.button_height)
+        self.b_sci.clicked.connect(self.go_scientific_calculator)
 
         self.b_prog = QtWidgets.QPushButton(self)
         self.b_prog.setText("Programmer")
         self.b_prog.setFont(self.font)
-        self.b_prog.setGeometry(self.button_width, 0, self.button_width, self.button_height)
-        self.b_prog.clicked.connect(lambda: self.clicked_button_calculator("P"))
+        self.b_prog.setGeometry(160, 0, 160, self.button_height)
+        self.b_prog.clicked.connect(self.go_programmer_calculator)
 
-        self.b_new = QtWidgets.QPushButton(self)
-        self.b_new.setText("...")
-        self.b_new.setFont(self.font)
-        self.b_new.setGeometry(2 * self.button_width, 0, self.button_width, self.button_height)
-        self.b_new.clicked.connect(lambda: self.clicked_button_calculator("G"))
-
-        self.b_new_1 = QtWidgets.QPushButton(self)
-        self.b_new_1.setText("...")
-        self.b_new_1.setFont(self.font)
-        self.b_new_1.setGeometry(3 * self.button_width, 0, self.button_width, self.button_height)
-        self.b_new_1.clicked.connect(lambda: self.clicked_button_calculator("D"))
+        self.b_conv = QtWidgets.QPushButton(self)
+        self.b_conv.setText("Converter")
+        self.b_conv.setFont(self.font)
+        self.b_conv.setGeometry(320, 0, 160, self.button_height)
+        self.b_conv.clicked.connect(self.go_converter_calculator)
 
         # First column
 
@@ -219,6 +218,29 @@ class MyWindow(QMainWindow):
                               self.button_height)
         self.b_eq.clicked.connect(lambda: self.clicked_button_result("="))
 
+        self.show()
+
+
+
+    def go_scientific_calculator(self):
+        self.new_window = Scientific_GUI.MyWindow()
+        self.new_window.show()
+        self.close()
+
+
+    def go_programmer_calculator(self):
+        self.new_window = Programmer_GUI.MyWindow()
+        self.new_window.show()
+        self.close()
+
+
+    def go_converter_calculator(self):
+        self.new_window = Converter_GUI.MyWindow()
+        self.new_window.show()
+        self.close()
+
+
+
     def clicked_button_expression(self, arg):  # Arguments to calculator
         print("expression/act " + str(arg))
 
@@ -227,10 +249,9 @@ class MyWindow(QMainWindow):
 
         self.text_box.setText(self.experssion)
 
-    def clicked_button_calculator(self, arg):  # Switching windows
-        print("Switch window " + str(arg))
-
     def clicked_button_result(self, arg):  # EQ button
+        print("Result:  " + str(arg))
+
         if (self.first_use == True):
             self.experssion_class = Standard_Expression.Expression(self.experssion)
             self.experssion_class.translate_expression()
@@ -249,10 +270,14 @@ class MyWindow(QMainWindow):
             self.experssion = self.result
 
     def clicked_button_ans(self):  # Ans button
+        print("Clicked!!!")
         print("ANS val:", self.ans_val)
+        if len(self.experssion + self.ans_val) < 49:
+            self.experssion += self.ans_val
         self.text_box.setText(self.experssion)
 
     def clicked_button_operation(self, arg):  # Other operations
+        print("Clicked!!!")
         if (len(self.experssion) != 0):
             if (arg == "DEL"):
                 self.experssion = self.experssion[0: len(self.experssion) - 1]
@@ -265,11 +290,7 @@ class MyWindow(QMainWindow):
         self.text_box.setText((self.experssion))
 
 
-def window():
+if __name__ == '__main__':
     app = QApplication(sys.argv)
-    win = MyWindow()
-    win.show()
-    app.exec_()
-
-
-window()
+    ex = MyWindow()
+    sys.exit(app.exec_())

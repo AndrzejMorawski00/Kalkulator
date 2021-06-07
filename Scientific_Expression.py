@@ -148,9 +148,3 @@ class Expression:
             return "ERROR"
 
 
-k = "5^1/5+4^1/43423423+4^1/3123"
-
-k = Expression(k)
-k.translate_expression()
-k.get_expression()
-print(k.evaluate_expression())

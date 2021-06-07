@@ -2,7 +2,12 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
 import Scientific_Expression
-import sys
+from PyQt5.QtCore import *
+
+import Standard_GUI
+import Programmer_GUI
+import Converter_GUI
+
 
 
 class MyWindow(QMainWindow):
@@ -35,25 +40,22 @@ class MyWindow(QMainWindow):
         self.b_sci = QtWidgets.QPushButton(self)
         self.b_sci.setText("Standard")
         self.b_sci.setFont(self.font)
-        self.b_sci.setGeometry(0, 0, self.button_width + 15, self.button_height)
+        self.b_sci.setGeometry(0, 0, 200, self.button_height)
+        self.b_sci.clicked.connect(self.go_standard_calculator)
 
         self.b_prog = QtWidgets.QPushButton(self)
         self.b_prog.setText("Programmer")
         self.b_prog.setFont(self.font)
-        self.b_prog.setGeometry(self.button_width + 15, 0, self.button_width + 15, self.button_height)
-        self.b_prog.clicked.connect(self.clicked_button)
+        self.b_prog.setGeometry(200, 0, 200, self.button_height)
+        self.b_prog.clicked.connect(self.go_programmer_calculator)
 
-        self.b_new = QtWidgets.QPushButton(self)
-        self.b_new.setText("...")
-        self.b_new.setFont(self.font)
-        self.b_new.setGeometry(2 * self.button_width + 30, 0, self.button_width + 15, self.button_height)
-        self.b_new.clicked.connect(self.clicked_button)
+        self.b_conv = QtWidgets.QPushButton(self)
+        self.b_conv.setText("Converter")
+        self.b_conv.setFont(self.font)
+        self.b_conv.setGeometry(400, 0, 200, self.button_height)
+        self.b_conv.clicked.connect(self.go_converter_calculator)
 
-        self.b_new_1 = QtWidgets.QPushButton(self)
-        self.b_new_1.setText("...")
-        self.b_new_1.setFont(self.font)
-        self.b_new_1.setGeometry(3 * self.button_width + 45, 0, self.button_width + 15, self.button_height)
-        self.b_new_1.clicked.connect(self.clicked_button)
+
 
         # First column
 
@@ -311,10 +313,26 @@ class MyWindow(QMainWindow):
         self.b_eq.setGeometry(4 * self.button_width, 9 * self.button_height, self.button_width, self.button_height)
         self.b_eq.clicked.connect(lambda: self.clicked_button_result("="))
 
+        self.show()
+
         # Functions
 
-    def clicked_button(self):
-        print("Clicked button!!!")
+
+
+    def go_standard_calculator(self):
+        self.new_window = Standard_GUI.MyWindow()
+        self.new_window.show()
+        self.close()
+
+    def go_programmer_calculator(self):
+        self.new_window = Programmer_GUI.MyWindow()
+        self.new_window.show()
+        self.close()
+
+    def go_converter_calculator(self):
+        self.new_window = Converter_GUI.MyWindow()
+        self.new_window.show()
+        self.close()
 
 
 
@@ -396,12 +414,8 @@ class MyWindow(QMainWindow):
 
     def clicked_button_ans(self):  # Ans button
         print("ANS val:", self.ans_val)
-
-        if (self.experssion.find("x") != -1):
-            self.experssion = self.experssion.replace("x", self.ans_val)
-        else:
+        if len(self.experssion + self.ans_val) < 49:
             self.experssion += self.ans_val
-
         self.text_box.setText(self.experssion)
 
     def clicked_button_result(self, arg):  # EQ button
@@ -424,12 +438,3 @@ class MyWindow(QMainWindow):
             self.text_box.setText(self.result)
             self.ans_val = self.result
             self.experssion = self.result
-
-def window():
-    app = QApplication(sys.argv)
-    win = MyWindow()
-    win.show()
-    app.exec_()
-
-
-window()
