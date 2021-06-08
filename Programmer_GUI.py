@@ -8,10 +8,10 @@ import Standard_GUI
 import Converter_GUI
 
 import Operation_Window
+import Programmer_Expression
 
 
 class MyWindow(QMainWindow):
-
 
     def __init__(self):
         super(MyWindow, self).__init__()
@@ -22,7 +22,8 @@ class MyWindow(QMainWindow):
         self.result = ""
         self.experssion = ""
         self.ans_val = ""
-        self.first_use = True
+        self.system = ""
+        self.first_use = False
 
         self.operation_window = Operation_Window.MyWindow()
         self.operation_window.got_operation.connect(self.set_operation)
@@ -56,9 +57,29 @@ class MyWindow(QMainWindow):
         self.b_conv.setGeometry(400, 0, 200, self.button_height)
         self.b_conv.clicked.connect(self.go_converter_calculator)
 
-        # Check buttons
+        self.b_hex = QtWidgets.QPushButton(self)
+        self.b_hex.setText("HEX")
+        self.b_hex.setFont(self.font)
+        self.b_hex.setGeometry(1 * self.button_width, 3 * self.button_height, self.button_width, self.button_height)
+        self.b_hex.clicked.connect(lambda: self.clicked_button_system("16"))
 
-        # hex oct bin dec
+        self.b_dec = QtWidgets.QPushButton(self)
+        self.b_dec.setText("DEC")
+        self.b_dec.setFont(self.font)
+        self.b_dec.setGeometry(2 * self.button_width, 3 * self.button_height, self.button_width, self.button_height)
+        self.b_dec.clicked.connect(lambda: self.clicked_button_system("10"))
+
+        self.b_oct = QtWidgets.QPushButton(self)
+        self.b_oct.setText("OCT")
+        self.b_oct.setFont(self.font)
+        self.b_oct.setGeometry(3 * self.button_width, 3 * self.button_height, self.button_width, self.button_height)
+        self.b_oct.clicked.connect(lambda: self.clicked_button_system("8"))
+
+        self.b_bin = QtWidgets.QPushButton(self)
+        self.b_bin.setText("BIN")
+        self.b_bin.setFont(self.font)
+        self.b_bin.setGeometry(4 * self.button_width, 3 * self.button_height, self.button_width, self.button_height)
+        self.b_bin.clicked.connect(lambda: self.clicked_button_system("2"))
 
         # First column
 
@@ -272,6 +293,10 @@ class MyWindow(QMainWindow):
             self.experssion += self.ans_val
         self.text_box.setText(self.experssion)
 
+    def clicked_button_system(self, arg):
+        self.system = arg
+        print(self.system)
+
     def clicked_button_operation(self, arg):  # Other operations
         if arg == "DEL":
             self.experssion = self.experssion[0: len(self.experssion) - 1]
@@ -306,28 +331,30 @@ class MyWindow(QMainWindow):
 
         self.text_box.setText(self.experssion)
 
-
     def clicked_button_result(self):  # EQ button
-        print("Clicked result!!!")
-        # if (self.first_use == False):
-        #     self.expression_class = Scientific_Expression.Expression(self.experssion)
-        #     self.expression_class.get_expression()
-        #     self.expression_class.translate_expression()
-        #     self.expression_class.get_expression()
-        #     self.result = self.expression_class.evaluate_expression()
-        #     self.text_box.setText(self.result)
-        #     self.ans_val = self.result
-        #     self.experssion = self.result
-        #     self.first_use = True
-        # else:
-        #
-        #     self.expression_class.update(self.experssion)
-        #     self.expression_class.translate_expression()
-        #     self.expression_class.get_expression()
-        #     self.result = self.expression_class.evaluate_expression()
-        #     self.text_box.setText(self.result)
-        #     self.ans_val = self.result
-        #     self.experssion = self.result
+        if (self.first_use == False):
+
+            print(self.experssion, " ", self.system)
+            self.experssion_class = Programmer_Expression.Expression(str(self.experssion), str(self.system))
+            self.experssion_class.translate_expression()
+            self.experssion_class.check_system()
+            self.experssion_class.evaluate_expression()
+            self.result = str(self.experssion_class.get_expression())
+            self.text_box.setText(str(self.result))
+            self.ans_val = self.result
+            self.experssion = self.result
+            self.first_use = True
+
+        else:
+            self.experssion_class = Programmer_Expression.Expression(str(self.experssion), str(self.system))
+            self.experssion_class.translate_expression()
+            self.experssion_class.check_system()
+            self.experssion_class.evaluate_expression()
+            self.result = str(self.experssion_class.get_expression())
+            self.text_box.setText(str(self.result))
+            self.ans_val = self.result
+            self.experssion = self.result
+            self.first_use = True
 
 
 if __name__ == '__main__':

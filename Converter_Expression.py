@@ -10,9 +10,7 @@ class Expression:
 
     def translate_expression(self):
         try:
-            if self.from_operation == self.to_operation:
-                return self.expression
-            else:
+            if self.from_operation != self.to_operation:
                 if self.from_operation == "16":
                     if self.to_operation == "10":
                         self.expression = str(int(self.expression, int(self.from_operation)))
@@ -24,7 +22,6 @@ class Expression:
                     elif self.to_operation == "2":
                         self.expression = int(self.expression, int(self.from_operation))
                         self.expression = bin(self.expression)
-
 
                 elif self.from_operation == "10":
                     self.expression = int(self.expression)
@@ -40,7 +37,6 @@ class Expression:
 
                     self.expression = str(self.expression)
 
-
                 elif self.from_operation == "8":
                     if self.to_operation == "10":
                         self.expression = str(int(self.expression, int(self.from_operation)))
@@ -53,7 +49,6 @@ class Expression:
                         self.expression = int(self.expression, int(self.from_operation))
                         self.expression = bin(self.expression)
 
-
                 elif self.from_operation == "2":
                     if self.to_operation == "10":
                         self.expression = str(int(self.expression, int(self.from_operation)))
@@ -65,10 +60,6 @@ class Expression:
                     elif self.to_operation == "8":
                         self.expression = int(self.expression, int(self.from_operation))
                         self.expression = oct(self.expression)
-
-
-
-
         except: "ERROR"
 
     def update(self, expression, from_operation, to_operation):
@@ -78,4 +69,5 @@ class Expression:
 
     def get_expression(self):
         return self.expression
+
 

@@ -20,8 +20,6 @@ class MyWindow(QMainWindow):
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)
 
-
-
         self.result = ""
         self.experssion = ""
 
@@ -167,11 +165,8 @@ class MyWindow(QMainWindow):
     def set_from_operation(self, arg):
         self.from_operation = arg
 
-
-
     def set_to_operation(self, arg):
         self.to_operation = arg
-
 
     def clicked_button_convert(self):
 
@@ -194,13 +189,6 @@ class MyWindow(QMainWindow):
 
         self.result_box.setText(self.experssion)
         self.result_box.setDisabled(False)
-
-
-
-
-
-
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

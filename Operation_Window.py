@@ -15,7 +15,7 @@ class MyWindow(QMainWindow):
 
         self.operation = ""
 
-        self.setGeometry(900, 200, 3 * self.button_width, 2 * self.button_height)
+        self.setGeometry(900, 200, 4 * self.button_width, 1 * self.button_height)
         self.setWindowTitle("Programmer Calculator")
         self.initUI()
 
@@ -36,11 +36,6 @@ class MyWindow(QMainWindow):
         self.b_and.setGeometry(0, 0 * self.button_height, self.button_width, self.button_height)
         self.b_and.clicked.connect(lambda: self.clicked_button_operation("AND"))
 
-        self.b_nand = QtWidgets.QPushButton(self)
-        self.b_nand.setText("NAND")
-        self.b_nand.setFont(self.font)
-        self.b_nand.setGeometry(0, 1 * self.button_height, self.button_width, self.button_height)
-        self.b_nand.clicked.connect(lambda: self.clicked_button_operation("NAND"))
 
         # Second column
 
@@ -50,11 +45,7 @@ class MyWindow(QMainWindow):
         self.b_or.setGeometry(1 * self.button_width, 0 * self.button_height, self.button_width, self.button_height)
         self.b_or.clicked.connect(lambda: self.clicked_button_operation("OR"))
 
-        self.b_nor = QtWidgets.QPushButton(self)
-        self.b_nor.setText("NOR")
-        self.b_nor.setFont(self.font)
-        self.b_nor.setGeometry(1 * self.button_width, 1 * self.button_height, self.button_width, self.button_height)
-        self.b_nor.clicked.connect(lambda: self.clicked_button_operation("NOR"))
+
 
         # Third column
 
@@ -67,10 +58,8 @@ class MyWindow(QMainWindow):
         self.b_xor = QtWidgets.QPushButton(self)
         self.b_xor.setText("XOR")
         self.b_xor.setFont(self.font)
-        self.b_xor.setGeometry(2 * self.button_width, 1 * self.button_height, self.button_width, self.button_height)
+        self.b_xor.setGeometry(3 * self.button_width, 0 * self.button_height, self.button_width, self.button_height)
         self.b_xor.clicked.connect(lambda: self.clicked_button_operation("XOR"))
-
-        self.show()
 
     def clicked_button_operation(self, operation):  # Other operations
         self.got_operation.emit(operation)
