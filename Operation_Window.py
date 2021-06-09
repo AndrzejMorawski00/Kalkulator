@@ -20,6 +20,7 @@ class MyWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
+
         # First column
 
         self.text_box = QLineEdit(self)
@@ -29,13 +30,11 @@ class MyWindow(QMainWindow):
         self.text_box.resize(5 * self.button_width, self.button_height)
         self.text_box.hide()
 
-
         self.b_and = QtWidgets.QPushButton(self)
         self.b_and.setText("AND")
         self.b_and.setFont(self.font)
         self.b_and.setGeometry(0, 0 * self.button_height, self.button_width, self.button_height)
         self.b_and.clicked.connect(lambda: self.clicked_button_operation("AND"))
-
 
         # Second column
 
@@ -44,8 +43,6 @@ class MyWindow(QMainWindow):
         self.b_or.setFont(self.font)
         self.b_or.setGeometry(1 * self.button_width, 0 * self.button_height, self.button_width, self.button_height)
         self.b_or.clicked.connect(lambda: self.clicked_button_operation("OR"))
-
-
 
         # Third column
 

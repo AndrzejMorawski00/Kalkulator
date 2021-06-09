@@ -1,5 +1,4 @@
 class Expression:
-
     def __init__(self, expression):
         self.expression = expression
 
@@ -8,11 +7,7 @@ class Expression:
         self.expression = self.expression.replace('÷', '/')
         self.expression = self.expression.replace("^1/", "**(1/)")
         self.expression = self.expression.replace('^', '**')
-
         self.translate_roots()
-
-
-
 
     def translate_roots(self):
         while (self.expression.find("3√") != -1):

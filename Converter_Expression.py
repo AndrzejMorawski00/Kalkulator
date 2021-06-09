@@ -1,6 +1,3 @@
-import math
-
-
 class Expression:
 
     def __init__(self, expression, from_operation, to_operation):

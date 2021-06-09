@@ -87,9 +87,6 @@ class Expression:
 
     def translate_logs(self):
 
-        # logx  -> log base 10 of x
-        # lnx   -> log base e of x
-        # logxy -> log base x of y
         while (self.expression.find("ln") != -1):
             idx = self.expression.find("ln") + 2
             new_number = ""
@@ -114,7 +111,6 @@ class Expression:
                     (48 <= ord(self.expression[idx]) <= 57) or self.expression[idx] == "." or self.expression[
                 idx] == "_")):
                 new_number += self.expression[idx]
-
                 idx += 1
 
             tab_number = new_number.split("_")

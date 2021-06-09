@@ -17,8 +17,6 @@ class MyWindow(QMainWindow):
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)
 
-        self.k = 120
-
         self.result = ""
         self.experssion = ""
         self.ans_val = ""
@@ -54,8 +52,6 @@ class MyWindow(QMainWindow):
         self.b_conv.setFont(self.font)
         self.b_conv.setGeometry(400, 0, 200, self.button_height)
         self.b_conv.clicked.connect(self.go_converter_calculator)
-
-
 
         # First column
 
@@ -316,9 +312,6 @@ class MyWindow(QMainWindow):
         self.show()
 
         # Functions
-
-
-
     def go_standard_calculator(self):
         self.new_window = Standard_GUI.MyWindow()
         self.new_window.show()
@@ -333,8 +326,6 @@ class MyWindow(QMainWindow):
         self.new_window = Converter_GUI.MyWindow()
         self.new_window.show()
         self.close()
-
-
 
     def clicked_button_switch(self):  # Default switch is False
 
@@ -392,7 +383,6 @@ class MyWindow(QMainWindow):
             elif (arg == "CE"):
                 self.experssion = ""
                 self.ans_val = ""
-
         self.text_box.setText((self.experssion))
 
     def clicked_button_expression(self, arg):
@@ -430,7 +420,6 @@ class MyWindow(QMainWindow):
             self.experssion = self.result
             self.first_use = True
         else:
-
             self.expression_class.update(self.experssion)
             self.expression_class.translate_expression()
             self.expression_class.get_expression()

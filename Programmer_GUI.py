@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QApplication
 from PyQt5.QtGui import QFont
-import sys
+
 
 import Scientific_GUI
 import Standard_GUI
@@ -333,7 +333,6 @@ class MyWindow(QMainWindow):
 
     def clicked_button_result(self):  # EQ button
         if (self.first_use == False):
-
             print(self.experssion, " ", self.system)
             self.experssion_class = Programmer_Expression.Expression(str(self.experssion), str(self.system))
             self.experssion_class.translate_expression()
@@ -344,7 +343,6 @@ class MyWindow(QMainWindow):
             self.ans_val = self.result
             self.experssion = self.result
             self.first_use = True
-
         else:
             self.experssion_class = Programmer_Expression.Expression(str(self.experssion), str(self.system))
             self.experssion_class.translate_expression()
@@ -356,8 +354,3 @@ class MyWindow(QMainWindow):
             self.experssion = self.result
             self.first_use = True
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = MyWindow()
-    sys.exit(app.exec_())

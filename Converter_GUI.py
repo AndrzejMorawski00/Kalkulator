@@ -22,7 +22,6 @@ class MyWindow(QMainWindow):
 
         self.result = ""
         self.experssion = ""
-
         self.from_operation = ""
         self.to_operation = ""
 

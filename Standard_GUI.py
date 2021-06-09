@@ -15,15 +15,13 @@ class MyWindow(QMainWindow):
         super(MyWindow, self).__init__()
         self.button_height = 70
         self.button_width = 120
-        self.font = QFont('TimesNewRoman', 13)
-
         self.k = 120
+        self.font = QFont('TimesNewRoman', 13)
 
         self.result = ""
         self.experssion = ""
         self.ans_val = ""
         self.first_use = True
-
 
         self.setGeometry(200, 200, 4 * self.button_width, 9 * self.button_height - 10)
         self.setWindowTitle("Calculator")
@@ -220,33 +218,26 @@ class MyWindow(QMainWindow):
 
         self.show()
 
-
-
     def go_scientific_calculator(self):
         self.new_window = Scientific_GUI.MyWindow()
         self.new_window.show()
         self.close()
-
 
     def go_programmer_calculator(self):
         self.new_window = Programmer_GUI.MyWindow()
         self.new_window.show()
         self.close()
 
-
     def go_converter_calculator(self):
         self.new_window = Converter_GUI.MyWindow()
         self.new_window.show()
         self.close()
-
-
 
     def clicked_button_expression(self, arg):  # Arguments to calculator
         print("expression/act " + str(arg))
 
         if (len(self.experssion + arg) < 49):
             self.experssion = self.experssion + arg
-
         self.text_box.setText(self.experssion)
 
     def clicked_button_result(self, arg):  # EQ button
@@ -288,7 +279,6 @@ class MyWindow(QMainWindow):
                 self.ans_val = ""
 
         self.text_box.setText((self.experssion))
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

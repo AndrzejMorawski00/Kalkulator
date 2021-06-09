@@ -1,11 +1,9 @@
 import Converter_Expression
 
-
 class Expression:
 
     def __init__(self, expression, system):
         self.expression = expression
-
         self.system = system
 
     def translate_expression(self):
@@ -58,11 +56,9 @@ class Expression:
         expression_copy = expression_copy.replace(new_number, new_expression.get_expression(), 1)
 
         self.expression = expression_copy
-
         self.__evaluate_bit_operations()
 
     def __evaluate_bit_operations(self):
-
         try:
             self.expression = eval(self.expression)
         except:
