@@ -2,12 +2,18 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import *
-import Standard_Expression
+
 import sys
 
 import Scientific_GUI
 import Programmer_GUI
 import Converter_GUI
+
+import Standard_Expression
+import Scientific_Expression
+import Programmer_Expression
+import Converter_Expression
+import Operation_Window
 
 class Standard_GUI(QMainWindow):
 
