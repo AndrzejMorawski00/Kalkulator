@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
 import Scientific_Expression
-from PyQt5.QtCore import *
+
 
 import Standard_GUI
 import Programmer_GUI
@@ -10,7 +10,7 @@ import Converter_GUI
 
 
 
-class MyWindow(QMainWindow):
+class Scientific_GUI(QMainWindow):
 
     def __init__(self):
         self.button_height = 70
@@ -23,7 +23,7 @@ class MyWindow(QMainWindow):
         self.first_use = False
         self.switch = False
 
-        super(MyWindow, self).__init__()
+        super(Scientific_GUI, self).__init__()
         self.setGeometry(200, 200, 5 * self.button_width, 10 * self.button_height)
         self.setWindowTitle("Calculator")
         self.initUI()
@@ -307,23 +307,23 @@ class MyWindow(QMainWindow):
         self.b_eq.setText("=")
         self.b_eq.setFont(self.font)
         self.b_eq.setGeometry(4 * self.button_width, 9 * self.button_height, self.button_width, self.button_height)
-        self.b_eq.clicked.connect(lambda: self.clicked_button_result("="))
+        self.b_eq.clicked.connect(self.clicked_button_result)
 
         self.show()
 
         # Functions
     def go_standard_calculator(self):
-        self.new_window = Standard_GUI.MyWindow()
+        self.new_window = Standard_GUI.Standard_GUI()
         self.new_window.show()
         self.close()
 
     def go_programmer_calculator(self):
-        self.new_window = Programmer_GUI.MyWindow()
+        self.new_window = Programmer_GUI.Programmer_GUI()
         self.new_window.show()
         self.close()
 
     def go_converter_calculator(self):
-        self.new_window = Converter_GUI.MyWindow()
+        self.new_window = Converter_GUI.Converter_GUI()
         self.new_window.show()
         self.close()
 
@@ -408,9 +408,9 @@ class MyWindow(QMainWindow):
             self.experssion += self.ans_val
         self.text_box.setText(self.experssion)
 
-    def clicked_button_result(self, arg):  # EQ button
+    def clicked_button_result(self):  # EQ button
         if (self.first_use == False):
-            self.expression_class = Scientific_Expression.Expression(self.experssion)
+            self.expression_class = Scientific_Expression.Scientific_Expression(self.experssion)
             self.expression_class.get_expression()
             self.expression_class.translate_expression()
             self.expression_class.get_expression()
@@ -419,6 +419,7 @@ class MyWindow(QMainWindow):
             self.ans_val = self.result
             self.experssion = self.result
             self.first_use = True
+
         else:
             self.expression_class.update(self.experssion)
             self.expression_class.translate_expression()

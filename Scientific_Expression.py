@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 
-class Expression:
+class Scientific_Expression:
 
     def __init__(self, expression):
         self.expression = expression
@@ -134,7 +134,7 @@ class Expression:
         return result
 
     def get_expression(self):
-        print(self.expression)
+        return self.expression
 
     def evaluate_expression(self):
         try:

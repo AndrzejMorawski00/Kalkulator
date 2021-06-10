@@ -1,9 +1,6 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import *
-import Standard_Expression
-import sys
 
 import Scientific_GUI
 import Programmer_GUI
@@ -12,10 +9,9 @@ import Standard_GUI
 import Converter_Expression
 
 
-class MyWindow(QMainWindow):
-
+class Converter_GUI(QMainWindow):
     def __init__(self):
-        super(MyWindow, self).__init__()
+        super(Converter_GUI, self).__init__()
         self.button_height = 70
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)
@@ -25,7 +21,7 @@ class MyWindow(QMainWindow):
         self.from_operation = ""
         self.to_operation = ""
 
-        self.first_use = True
+        self.first_use = False
 
         self.setGeometry(200, 200, 4 * self.button_width, 9 * self.button_height - 10)
         self.setWindowTitle("Calculator")
@@ -140,56 +136,93 @@ class MyWindow(QMainWindow):
 
         self.b_convert = QtWidgets.QPushButton(self)
         self.b_convert.setText("CONVERT")
-        self.b_convert.setFont(QFont('TimesNewRoman', 15))
+        self.b_convert.setFont(self.font)
         self.b_convert.setGeometry(self.bw - 160, self.bh, self.button_width + 40, self.button_height)
         self.b_convert.clicked.connect(lambda: self.clicked_button_convert())
 
+        self.b_from_operation = QtWidgets.QPushButton(self)
+        self.b_from_operation.setFont(self.font)
+        self.b_from_operation.setGeometry(self.bw - 160, self.bh + 70, self.button_width + 40, self.button_height)
+
+        self.b_to_operation = QtWidgets.QPushButton(self)
+        self.b_to_operation.setFont(self.font)
+        self.b_to_operation.setGeometry(self.bw - 160, self.bh + 140, self.button_width + 40, self.button_height)
+
+        self.b_set_expression = QtWidgets.QPushButton(self)
+        self.b_set_expression.setText("TO INPUT")
+        self.b_set_expression.setFont(self.font)
+        self.b_set_expression.setGeometry(self.bw - 160, self.bh + 210, self.button_width + 40, self.button_height)
+        self.b_set_expression.clicked.connect(self.set_result_to_input)
+
         self.show()
 
+    def set_result_to_input(self):
+        self.text_box.setText(self.result)
+        self.result_box.setText("")
+
+    def set_b_from_operation(self):
+        if self.from_operation == "16":
+            self.b_from_operation.setText("HEX")
+        elif self.from_operation == "10":
+            self.b_from_operation.setText("DEC")
+        elif self.from_operation == "8":
+            self.b_from_operation.setText("OCT")
+        else:
+            self.b_from_operation.setText("BIN")
+
+    def set_b_to_operation(self):
+        if self.to_operation == "16":
+            self.b_to_operation.setText("HEX")
+        elif self.to_operation == "10":
+            self.b_to_operation.setText("DEC")
+        elif self.to_operation == "8":
+            self.b_to_operation.setText("OCT")
+        else:
+            self.b_to_operation.setText("BIN")
+
     def go_standard_calculator(self):
-        self.new_window = Standard_GUI.MyWindow()
+        self.new_window = Standard_GUI.Standard_GUI()
         self.new_window.show()
         self.close()
 
     def go_scientific_calculator(self):
-        self.new_window = Scientific_GUI.MyWindow()
+        self.new_window = Scientific_GUI.Scientific_GUI()
         self.new_window.show()
         self.close()
 
     def go_programmer_calculator(self):
-        self.new_window = Programmer_GUI.MyWindow()
+        self.new_window = Programmer_GUI.Programmer_GUI()
         self.new_window.show()
         self.close()
 
-    def set_from_operation(self, arg):
-        self.from_operation = arg
+    def set_from_operation(self, operation):
+        self.from_operation = operation
+        self.set_b_from_operation()
 
-    def set_to_operation(self, arg):
-        self.to_operation = arg
+    def set_to_operation(self, operation):
+        self.to_operation = operation
+        self.set_b_to_operation()
 
     def clicked_button_convert(self):
-
         self.experssion = self.text_box.text()
         self.experssion = self.experssion.upper()
+        print(self.experssion, "   ", self.from_operation, "->", self.to_operation)
 
-        if self.first_use == True:
-            self.new_class = Converter_Expression.Expression(self.experssion, self.from_operation,self.to_operation)
+        if self.first_use == False:
+            self.new_class = Converter_Expression.Converter_Expression(self.experssion, self.from_operation,
+                                                                       self.to_operation)
             self.new_class.translate_expression()
             self.experssion = self.new_class.get_expression()
-            self.experssion = self.experssion[2::]
-            self.first_use = False
+            self.result = self.experssion
 
-        elif self.first_use == False:
+            self.first_use = True
 
-            self.new_class.update(self.experssion, self.from_operation,self.to_operation)
+        else:
+            self.new_class.update(self.experssion, self.from_operation, self.to_operation)
             self.new_class.translate_expression()
             self.experssion = self.new_class.get_expression()
-            self.experssion = self.experssion[2::]
+            self.experssion = self.experssion.replace(self.to_operation, "", 1)
+            self.result = self.experssion
 
-        self.result_box.setText(self.experssion)
+        self.result_box.setText(self.result)
         self.result_box.setDisabled(False)
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = MyWindow()
-    sys.exit(app.exec_())

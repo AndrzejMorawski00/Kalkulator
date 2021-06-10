@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QApplication
 from PyQt5.QtGui import QFont
-
+import sys
 
 import Scientific_GUI
 import Standard_GUI
@@ -11,10 +11,10 @@ import Operation_Window
 import Programmer_Expression
 
 
-class MyWindow(QMainWindow):
+class Programmer_GUI(QMainWindow):
 
     def __init__(self):
-        super(MyWindow, self).__init__()
+        super(Programmer_GUI, self).__init__()
         self.button_height = 70
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)
@@ -25,7 +25,7 @@ class MyWindow(QMainWindow):
         self.system = ""
         self.first_use = False
 
-        self.operation_window = Operation_Window.MyWindow()
+        self.operation_window = Operation_Window.Operation_Window()
         self.operation_window.got_operation.connect(self.set_operation)
 
         self.setGeometry(200, 200, 5 * self.button_width, 10 * self.button_height)
@@ -56,6 +56,10 @@ class MyWindow(QMainWindow):
         self.b_conv.setFont(self.font)
         self.b_conv.setGeometry(400, 0, 200, self.button_height)
         self.b_conv.clicked.connect(self.go_converter_calculator)
+
+        self.b_system = QtWidgets.QPushButton(self)
+        self.b_system.setFont(self.font)
+        self.b_system.setGeometry(0, 3 * self.button_height, self.button_width, self.button_height)
 
         self.b_hex = QtWidgets.QPushButton(self)
         self.b_hex.setText("HEX")
@@ -268,22 +272,22 @@ class MyWindow(QMainWindow):
         self.b_eq.setText("=")
         self.b_eq.setFont(self.font)
         self.b_eq.setGeometry(4 * self.button_width, 9 * self.button_height, self.button_width, self.button_height)
-        self.b_eq.clicked.connect(self.clicked_button_result)
+        self.b_eq.clicked.connect(lambda: self.clicked_button_result())
 
         self.show()
 
     def go_standard_calculator(self):
-        self.new_window = Standard_GUI.MyWindow()
+        self.new_window = Standard_GUI.Standard_GUI()
         self.new_window.show()
         self.close()
 
     def go_scientific_calculator(self):
-        self.new_window = Scientific_GUI.MyWindow()
+        self.new_window = Scientific_GUI.Scientific_GUI()
         self.new_window.show()
         self.close()
 
     def go_converter_calculator(self):
-        self.new_window = Converter_GUI.MyWindow()
+        self.new_window = Converter_GUI.Converter_GUI()
         self.new_window.show()
         self.close()
 
@@ -296,6 +300,17 @@ class MyWindow(QMainWindow):
     def clicked_button_system(self, arg):
         self.system = arg
         print(self.system)
+        self.set_button_operation()
+
+    def set_button_operation(self):
+        if self.system == "16":
+            self.b_system.setText("HEX")
+        elif self.system == "10":
+            self.b_system.setText("DEC")
+        elif self.system == "8":
+            self.b_system.setText("OCT")
+        else:
+            self.b_system.setText("BIN")
 
     def clicked_button_operation(self, arg):  # Other operations
         if arg == "DEL":
@@ -328,29 +343,25 @@ class MyWindow(QMainWindow):
     def set_operation(self, operation):
         if len(self.experssion + operation) < 49:
             self.experssion += operation
-
         self.text_box.setText(self.experssion)
 
     def clicked_button_result(self):  # EQ button
-        if (self.first_use == False):
-            print(self.experssion, " ", self.system)
-            self.experssion_class = Programmer_Expression.Expression(str(self.experssion), str(self.system))
-            self.experssion_class.translate_expression()
-            self.experssion_class.check_system()
-            self.experssion_class.evaluate_expression()
-            self.result = str(self.experssion_class.get_expression())
-            self.text_box.setText(str(self.result))
-            self.ans_val = self.result
-            self.experssion = self.result
+        if self.first_use is False:
+            self.new_class = Programmer_Expression.Programmer_Expression(self.experssion, self.system)
+            self.new_class.evaluate_expression()
+            self.experssion = self.new_class.get_expression()
+            self.system = self.new_class.get_system()
+            self.ans_val = self.experssion
+            self.result = self.experssion
+            self.text_box.setText(self.result)
+            self.b_system.setText(self.system)
             self.first_use = True
         else:
-            self.experssion_class = Programmer_Expression.Expression(str(self.experssion), str(self.system))
-            self.experssion_class.translate_expression()
-            self.experssion_class.check_system()
-            self.experssion_class.evaluate_expression()
-            self.result = str(self.experssion_class.get_expression())
-            self.text_box.setText(str(self.result))
-            self.ans_val = self.result
-            self.experssion = self.result
-            self.first_use = True
-
+            self.new_class.update(self.experssion, self.system)
+            self.new_class.evaluate_expression()
+            self.experssion = self.new_class.get_expression()
+            self.system = self.new_class.get_system()
+            self.ans_val = self.experssion
+            self.result = self.experssion
+            self.text_box.setText(self.result)
+            self.b_system.setText(self.system)

@@ -1,6 +1,7 @@
 import Converter_Expression
 
-class Expression:
+
+class Programmer_Expression:
 
     def __init__(self, expression, system):
         self.expression = expression
@@ -15,7 +16,16 @@ class Expression:
         self.expression = self.expression.replace("NOT", "~")
 
     def get_expression(self):
+
+        new_expression = Converter_Expression.Converter_Expression(self.expression,"10",self.system)
+        new_expression.translate_expression()
+        self.expression = new_expression.get_expression()
+
         return str(self.expression)
+
+    def get_system(self):
+        print(self.system)
+        return str(self.system)
 
     def check_system(self):
 
@@ -39,31 +49,50 @@ class Expression:
 
     def evaluate_expression(self):
 
+        self.translate_expression()
+        self.check_system()
+
         expression_copy = self.expression
         new_number = ""
 
         for i in range(len(self.expression)):
-            if (48 <= ord(self.expression[i]) <= 57) or (65 <= ord(self.expression[i]) <= 70):
+            if ((48 <= ord(self.expression[i]) <= 57) or (65 <= ord(self.expression[i]) <= 70)):
                 new_number += self.expression[i]
             else:
-                if new_number != "":
-                    new_expression = Converter_Expression.Expression(new_number, self.system, "10")
-                    new_expression.translate_expression()
-                    expression_copy = expression_copy.replace(new_number, new_expression.get_expression(), 1)
-                    new_number = ""
-        new_expression = Converter_Expression.Expression(new_number, self.system, "10")
+                new_expression = Converter_Expression.Converter_Expression(new_number, self.system,"10")
+                new_expression.translate_expression()
+                new_expression = new_expression.get_expression()
+                expression_copy = expression_copy.replace(new_number, new_expression, 1)
+                new_number = ""
+        new_expression = Converter_Expression.Converter_Expression(new_number, self.system, "10")
         new_expression.translate_expression()
-        expression_copy = expression_copy.replace(new_number, new_expression.get_expression(), 1)
+        new_expression = new_expression.get_expression()
+        expression_copy = expression_copy.replace(new_number, new_expression, 1)
 
         self.expression = expression_copy
-        self.__evaluate_bit_operations()
+        print(expression_copy)
+        self.evaluate_bit_operations()
 
-    def __evaluate_bit_operations(self):
+    def evaluate_bit_operations(self):
         try:
-            self.expression = eval(self.expression)
+            self.expression = str(eval(self.expression))
         except:
             self.expression = "ERROR"
 
-    def update_expression(self, expression, system):
+    def update(self, expression, system):
         self.expression = expression
         self.system = system
+
+
+# exp = "57+36AND57-65×AFOR32"
+# sys = "10"
+# exp = Programmer_Expression(exp, sys)
+# exp.translate_expression()
+# exp.check_system()
+# exp.evaluate_expression()
+# print(exp.get_expression())
+# exp.update("57+36AND57-65","10")
+# exp.translate_expression()
+# exp.check_system()
+# exp.evaluate_expression()
+# print(exp.get_expression())

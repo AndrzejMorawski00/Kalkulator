@@ -1,14 +1,14 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtWidgets import QMainWindow, QApplication, QLineEdit
+from PyQt5.QtWidgets import QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
-import sys
 
-class MyWindow(QMainWindow):
+
+class Operation_Window(QMainWindow):
 
     got_operation = QtCore.pyqtSignal(str)
 
     def __init__(self):
-        super(MyWindow, self).__init__()
+        super(Operation_Window, self).__init__()
         self.button_height = 70
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)

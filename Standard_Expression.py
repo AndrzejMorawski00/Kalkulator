@@ -1,4 +1,4 @@
-class Expression:
+class Standard_Expression:
     def __init__(self, expression):
         self.expression = expression
 
@@ -19,7 +19,6 @@ class Expression:
                     (48 <= ord(self.expression[idx]) <= 57) or self.expression[idx] == ".")):
                 new_number += self.expression[idx]
                 idx += 1
-
             self.expression = self.expression.replace(new_number, new_number + "**(1/3)", 1)
             self.expression = self.expression.replace("3√", "", 1)
 
@@ -37,9 +36,6 @@ class Expression:
 
     def update(self, new_expression):
         self.expression = new_expression
-
-    def get_expression(self):
-        return self.expression
 
     def evaluate_expression(self):
         print(self.expression)

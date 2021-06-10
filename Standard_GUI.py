@@ -9,19 +9,20 @@ import Scientific_GUI
 import Programmer_GUI
 import Converter_GUI
 
-class MyWindow(QMainWindow):
+class Standard_GUI(QMainWindow):
 
     def __init__(self):
-        super(MyWindow, self).__init__()
+        super(Standard_GUI, self).__init__()
         self.button_height = 70
         self.button_width = 120
-        self.k = 120
+        self.k = self.button_width + 80
+
         self.font = QFont('TimesNewRoman', 13)
 
         self.result = ""
         self.experssion = ""
         self.ans_val = ""
-        self.first_use = True
+        self.first_use = False
 
         self.setGeometry(200, 200, 4 * self.button_width, 9 * self.button_height - 10)
         self.setWindowTitle("Calculator")
@@ -54,7 +55,7 @@ class MyWindow(QMainWindow):
 
         # First column
 
-        self.k = self.k + 80
+
 
         self.b_mod = QtWidgets.QPushButton(self)
         self.b_mod.setText("%")
@@ -214,22 +215,22 @@ class MyWindow(QMainWindow):
         self.b_eq.setFont(self.font)
         self.b_eq.setGeometry(3 * self.button_width, self.k + 5 * self.button_height, self.button_width,
                               self.button_height)
-        self.b_eq.clicked.connect(lambda: self.clicked_button_result("="))
+        self.b_eq.clicked.connect(self.clicked_button_result)
 
         self.show()
 
     def go_scientific_calculator(self):
-        self.new_window = Scientific_GUI.MyWindow()
+        self.new_window = Scientific_GUI.Scientific_GUI()
         self.new_window.show()
         self.close()
 
     def go_programmer_calculator(self):
-        self.new_window = Programmer_GUI.MyWindow()
+        self.new_window = Programmer_GUI.Programmer_GUI()
         self.new_window.show()
         self.close()
 
     def go_converter_calculator(self):
-        self.new_window = Converter_GUI.MyWindow()
+        self.new_window = Converter_GUI.Converter_GUI()
         self.new_window.show()
         self.close()
 
@@ -239,26 +240,6 @@ class MyWindow(QMainWindow):
         if (len(self.experssion + arg) < 49):
             self.experssion = self.experssion + arg
         self.text_box.setText(self.experssion)
-
-    def clicked_button_result(self, arg):  # EQ button
-        print("Result:  " + str(arg))
-
-        if (self.first_use == True):
-            self.experssion_class = Standard_Expression.Expression(self.experssion)
-            self.experssion_class.translate_expression()
-            self.result = self.experssion_class.evaluate_expression()
-            self.text_box.setText(self.result)
-            self.ans_val = self.result
-            self.experssion = self.result
-
-            self.first_use = False
-        else:
-            self.experssion_class.update(self.experssion)
-            self.experssion_class.translate_expression()
-            self.result = self.experssion_class.evaluate_expression()
-            self.text_box.setText(self.result)
-            self.ans_val = self.result
-            self.experssion = self.result
 
     def clicked_button_ans(self):  # Ans button
         print("Clicked!!!")
@@ -280,7 +261,26 @@ class MyWindow(QMainWindow):
 
         self.text_box.setText((self.experssion))
 
+    def clicked_button_result(self):  # EQ button
+        if (self.first_use == False):
+            self.experssion_class = Standard_Expression.Standard_Expression(self.experssion)
+            self.experssion_class.translate_expression()
+            self.result = self.experssion_class.evaluate_expression()
+            self.text_box.setText(self.result)
+            self.ans_val = self.result
+            self.experssion = self.result
+
+            self.first_use = True
+        else:
+            self.experssion_class.update(self.experssion)
+            self.experssion_class.translate_expression()
+            self.result = self.experssion_class.evaluate_expression()
+            self.text_box.setText(self.result)
+            self.ans_val = self.result
+            self.experssion = self.result
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = MyWindow()
+    ex = Standard_GUI()
     sys.exit(app.exec_())
