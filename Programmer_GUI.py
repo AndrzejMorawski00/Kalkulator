@@ -60,6 +60,8 @@ class Programmer_GUI(QMainWindow):
         self.b_system = QtWidgets.QPushButton(self)
         self.b_system.setFont(self.font)
         self.b_system.setGeometry(0, 3 * self.button_height, self.button_width, self.button_height)
+        self.b_system.setDisabled(True)
+
 
         self.b_hex = QtWidgets.QPushButton(self)
         self.b_hex.setText("HEX")

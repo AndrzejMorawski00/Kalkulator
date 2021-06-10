@@ -143,10 +143,12 @@ class Converter_GUI(QMainWindow):
         self.b_from_operation = QtWidgets.QPushButton(self)
         self.b_from_operation.setFont(self.font)
         self.b_from_operation.setGeometry(self.bw - 160, self.bh + 70, self.button_width + 40, self.button_height)
+        self.b_from_operation.setDisabled(True)
 
         self.b_to_operation = QtWidgets.QPushButton(self)
         self.b_to_operation.setFont(self.font)
         self.b_to_operation.setGeometry(self.bw - 160, self.bh + 140, self.button_width + 40, self.button_height)
+        self.b_to_operation.setDisabled(True)
 
         self.b_set_expression = QtWidgets.QPushButton(self)
         self.b_set_expression.setText("TO INPUT")
