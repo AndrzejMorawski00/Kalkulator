@@ -90,18 +90,27 @@ class Scientific_Expression:
         while (self.expression.find("ln") != -1):
             idx = self.expression.find("ln") + 2
             new_number = ""
-
             while (idx < len(self.expression) and (
                     (48 <= ord(self.expression[idx]) <= 57) or self.expression[idx] == ".")):
                 new_number += self.expression[idx]
                 idx += 1
+
             try:
-                new_number = float(new_number)
-                new_log = round(np.log(new_number), 4)
-                self.expression = self.expression.replace(str(new_number), str(new_log))
-                self.expression = self.expression.replace("ln", "", 1)
+                new_number_int = int(new_number)
+                if self.expression.find(str(new_number_int)) != -1:
+                    new_log = round(math.log(new_number_int,math.e),4)
+                    self.expression = self.expression.replace(str(new_number), str(new_log),1)
             except:
-                return "ERROR"
+                pass
+            try:
+                new_number_float = float(new_number)
+                if self.expression.find(str(new_number_float)) != -1:
+                    new_log = round(math.log(new_number_float,math.e),4)
+                    self.expression = self.expression.replace(str(new_number), str(new_log), 1)
+            except:
+                pass
+
+            self.expression = self.expression.replace("ln", "", 1)
 
         while (self.expression.find("log") != -1):
             idx = self.expression.find("log") + 3
@@ -142,5 +151,4 @@ class Scientific_Expression:
             return self.expression
         except:
             return "ERROR"
-
 

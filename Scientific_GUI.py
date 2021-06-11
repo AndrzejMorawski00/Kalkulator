@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
 import Scientific_Expression
-
+import sys
 
 import Standard_GUI
 import Programmer_GUI
@@ -189,7 +189,7 @@ class Scientific_GUI(QMainWindow):
         self.abs_val.setText("|x|")
         self.abs_val.setFont(self.font)
         self.abs_val.setGeometry(2 * self.button_width, 4 * self.button_height, self.button_width, self.button_height)
-        self.abs_val.clicked.connect(lambda: self.clicked_button_abs())
+        self.abs_val.clicked.connect(self.clicked_button_abs)
 
         self.r_bracket = QtWidgets.QPushButton(self)
         self.r_bracket.setText(")")
@@ -393,14 +393,16 @@ class Scientific_GUI(QMainWindow):
         self.text_box.setText(self.experssion)
 
     def clicked_button_abs(self):
-        print(self.experssion)
-        abs_val = self.experssion
+
+        if self.result != "":
+            abs_val = self.result
         try:
-            abs_val = float(abs_val)
+            abs_val = float(self.result)
             abs_val = abs(abs_val)
-            self.text_box.setText(abs_val)
-            abs_val = ""
-        except: self.text_box.setText("")
+            self.experssion = str(abs_val)
+            self.text_box.setText(self.experssion)
+        except:
+            pass
 
     def clicked_button_ans(self):  # Ans button
         print("ANS val:", self.ans_val)
@@ -428,3 +430,8 @@ class Scientific_GUI(QMainWindow):
             self.text_box.setText(self.result)
             self.ans_val = self.result
             self.experssion = self.result
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Scientific_GUI()
+    sys.exit(app.exec_())
