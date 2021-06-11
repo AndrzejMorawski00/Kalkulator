@@ -148,7 +148,7 @@ class Scientific_Expression:
     def evaluate_expression(self):
         try:
             self.expression = str(round(float(eval(self.expression)), 4))
-            return self.expression
+
         except:
             return "ERROR"
 

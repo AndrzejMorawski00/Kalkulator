@@ -415,8 +415,8 @@ class Scientific_GUI(QMainWindow):
             self.expression_class = Scientific_Expression.Scientific_Expression(self.experssion)
             self.expression_class.get_expression()
             self.expression_class.translate_expression()
-            self.expression_class.get_expression()
-            self.result = self.expression_class.evaluate_expression()
+            self.expression_class.evaluate_expression()
+            self.result = self.expression_class.get_expression()
             self.text_box.setText(self.result)
             self.ans_val = self.result
             self.experssion = self.result
@@ -425,13 +425,10 @@ class Scientific_GUI(QMainWindow):
         else:
             self.expression_class.update(self.experssion)
             self.expression_class.translate_expression()
-            self.expression_class.get_expression()
-            self.result = self.expression_class.evaluate_expression()
+            self.expression_class.evaluate_expression()
+            self.result = self.expression_class.get_expression()
             self.text_box.setText(self.result)
             self.ans_val = self.result
             self.experssion = self.result
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Scientific_GUI()
-    sys.exit(app.exec_())
+button
