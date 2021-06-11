@@ -430,5 +430,3 @@ class Scientific_GUI(QMainWindow):
             self.text_box.setText(self.result)
             self.ans_val = self.result
             self.experssion = self.result
-
-button

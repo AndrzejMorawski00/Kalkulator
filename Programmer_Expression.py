@@ -84,15 +84,3 @@ class Programmer_Expression:
         self.system = system
 
 
-# exp = "57+36AND57-65×AFOR32"
-# sys = "10"
-# exp = Programmer_Expression(exp, sys)
-# exp.translate_expression()
-# exp.check_system()
-# exp.evaluate_expression()
-# print(exp.get_expression())
-# exp.update("57+36AND57-65","10")
-# exp.translate_expression()
-# exp.check_system()
-# exp.evaluate_expression()
-# print(exp.get_expression())
