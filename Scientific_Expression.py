@@ -5,14 +5,27 @@ import math
 class Scientific_Expression:
 
     def __init__(self, expression):
+        """
+        Konstruktor
+        :param expression:
+        """
         self.expression = expression
         self.e = str(math.e)
         self.pi = str(math.pi)
 
     def update(self, new_expression):
+        """
+        Funkcja odpowiedzialna za aktualizację wyrażenia.
+        :param new_expression:
+        :return:
+        """
         self.expression = new_expression
 
     def translate_expression(self):
+        """
+        Funkcja odpowiedzialna za przekształcenie wyrażenia do postaci gotowej do ewaluacji.
+        :return:
+        """
         self.expression = self.expression.replace('×', '*')
         self.expression = self.expression.replace('÷', '/')
         self.translate_pow()
@@ -25,6 +38,10 @@ class Scientific_Expression:
         self.translate_fact()
 
     def translate_pow(self):
+        """
+        Funkcja odpowiedzialna za przekształcenie potęg.
+        :return:
+        """
 
         while (self.expression.find("^1/") != -1):
             idx = self.expression.find("^1/") + 3
@@ -46,6 +63,10 @@ class Scientific_Expression:
             self.expression = self.expression.replace("^1/", "**(1/", 1)
 
     def translate_roots(self):
+        """
+        Funkcja odpowiedzialna za przekształcenie pierwiastków.
+        :return:
+        """
         while (self.expression.find("3√") != -1):
 
             idx = self.expression.find("3√") + 2
@@ -72,6 +93,10 @@ class Scientific_Expression:
             self.expression = self.expression.replace("√", "", 1)
 
     def translate_fact(self):
+        """
+        Funkcja odpwiedzialna za przekształcenie silni.
+        :return:
+        """
         while (self.expression.find("!") != -1):
             idx = self.expression.find("!") - 1
             new_number = ""
@@ -86,6 +111,10 @@ class Scientific_Expression:
             self.expression = self.expression.replace("!", "", 1)
 
     def translate_logs(self):
+        """
+        Funkcja odpowiedzialna za przekształcenie logarytmów.
+        :return:
+        """
 
         while (self.expression.find("ln") != -1):
             idx = self.expression.find("ln") + 2
@@ -132,6 +161,11 @@ class Scientific_Expression:
             self.expression = self.expression.replace("log", "", 1)
 
     def fact_n(self, n):
+        """
+        funkcja odpowiedzialna za obliczanie wartości silni.
+        :param n:
+        :return:
+        """
         try:
             n = int(n)
         except:
@@ -143,12 +177,19 @@ class Scientific_Expression:
         return result
 
     def get_expression(self):
+        """
+        Funkcja odpowiedzialna za zwrócenie wartości wyrażenia.
+        :return:
+        """
         return self.expression
 
     def evaluate_expression(self):
+        """
+        Funkcja odpowiedzialna za wyliczenie wartości wyrażenia.
+        :return:
+        """
         try:
             self.expression = str(round(float(eval(self.expression)), 4))
-
         except:
             return "ERROR"
 

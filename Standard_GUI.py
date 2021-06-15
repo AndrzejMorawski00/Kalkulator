@@ -1,7 +1,6 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLineEdit
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import *
 
 import sys
 
@@ -10,14 +9,14 @@ import Programmer_GUI
 import Converter_GUI
 
 import Standard_Expression
-import Scientific_Expression
-import Programmer_Expression
-import Converter_Expression
-import Operation_Window
+
 
 class Standard_GUI(QMainWindow):
 
     def __init__(self):
+        """
+        Konstruktor
+        """
         super(Standard_GUI, self).__init__()
         self.button_height = 70
         self.button_width = 120
@@ -35,6 +34,10 @@ class Standard_GUI(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        """
+        Funkcja odpowiedzialna za tworzenie interfejsu graficznego.
+        :return:
+        """
         self.text_box = QLineEdit(self)
         self.text_box.move(0, self.button_height + 30)
         self.text_box.setFont(QFont('TimesNewRoman', 16))
@@ -226,21 +229,38 @@ class Standard_GUI(QMainWindow):
         self.show()
 
     def go_scientific_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Scientific_GUI.Scientific_GUI()
         self.new_window.show()
         self.close()
 
     def go_programmer_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Programmer_GUI.Programmer_GUI()
         self.new_window.show()
         self.close()
 
     def go_converter_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Converter_GUI.Converter_GUI()
         self.new_window.show()
         self.close()
 
     def clicked_button_expression(self, arg):  # Arguments to calculator
+        """
+        Funkcja odpowiedzialna za tworzenie wyrażenia oraz wyświetlanie go w aplikacji.
+        :param arg:
+        :return:
+        """
         print("expression/act " + str(arg))
 
         if (len(self.experssion + arg) < 49):
@@ -248,6 +268,10 @@ class Standard_GUI(QMainWindow):
         self.text_box.setText(self.experssion)
 
     def clicked_button_ans(self):  # Ans button
+        """
+        Funkcja odpowiedzialna za wyświetlanie wartości ANS na ekranie.
+        :return:
+        """
         print("Clicked!!!")
         print("ANS val:", self.ans_val)
         if len(self.experssion + self.ans_val) < 49:
@@ -255,6 +279,11 @@ class Standard_GUI(QMainWindow):
         self.text_box.setText(self.experssion)
 
     def clicked_button_operation(self, arg):  # Other operations
+        """
+        Funkcja odpowiedzialna za wykonwyanie operacji(DEL, CE, C) na wyrażeniu.
+        :param arg:
+        :return:
+        """
         print("Clicked!!!")
         if (len(self.experssion) != 0):
             if (arg == "DEL"):
@@ -268,6 +297,10 @@ class Standard_GUI(QMainWindow):
         self.text_box.setText((self.experssion))
 
     def clicked_button_result(self):  # EQ button
+        """
+        Funkcja odpowiedzialna za ewaluację wyrażenia oraz wyświetlenie jej na ekranie.
+        :return:
+        """
         if (self.first_use == False):
             self.experssion_class = Standard_Expression.Standard_Expression(self.experssion)
             self.experssion_class.translate_expression()

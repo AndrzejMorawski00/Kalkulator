@@ -11,6 +11,9 @@ import Converter_Expression
 
 class Converter_GUI(QMainWindow):
     def __init__(self):
+        """
+        Konstruktor
+        """
         super(Converter_GUI, self).__init__()
         self.button_height = 70
         self.button_width = 120
@@ -28,6 +31,10 @@ class Converter_GUI(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        """
+        Funkcja odpowiedzialna za tworzenie interfejsu graficznego.
+        :return:
+        """
         self.b_sta = QtWidgets.QPushButton(self)
         self.b_sta.setText("Standard")
         self.b_sta.setFont(self.font)
@@ -159,10 +166,18 @@ class Converter_GUI(QMainWindow):
         self.show()
 
     def set_result_to_input(self):
+        """
+        Funkcja odpowiedzialna za przeniesienie wartości przekształconego wyrażenia.
+        :return:
+        """
         self.text_box.setText(self.result)
         self.result_box.setText("")
 
     def set_b_from_operation(self):
+        """
+        Funkcja odpowiedzialna za wyświetlenie wejsciowego systemu.
+        :return:
+        """
         if self.from_operation == "16":
             self.b_from_operation.setText("HEX")
         elif self.from_operation == "10":
@@ -173,6 +188,10 @@ class Converter_GUI(QMainWindow):
             self.b_from_operation.setText("BIN")
 
     def set_b_to_operation(self):
+        """
+        Funkcja odpowiedzialna za wyświetlenie wyjściowego sytemu.
+        :return:
+        """
         if self.to_operation == "16":
             self.b_to_operation.setText("HEX")
         elif self.to_operation == "10":
@@ -183,29 +202,57 @@ class Converter_GUI(QMainWindow):
             self.b_to_operation.setText("BIN")
 
     def go_standard_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
+
         self.new_window = Standard_GUI.Standard_GUI()
         self.new_window.show()
         self.close()
 
     def go_scientific_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Scientific_GUI.Scientific_GUI()
         self.new_window.show()
         self.close()
 
     def go_programmer_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Programmer_GUI.Programmer_GUI()
         self.new_window.show()
         self.close()
 
     def set_from_operation(self, operation):
+        """
+        Funkcja odpowiedzialna za ustawienie wartości wejsciowej systemu.
+        :param operation:
+        :return:
+        """
         self.from_operation = operation
         self.set_b_from_operation()
 
     def set_to_operation(self, operation):
+        """
+        Funkcja odpowiedzialna za ustawienie wartości wyjściowej systemu.
+        :param operation:
+        :return:
+        """
+
         self.to_operation = operation
         self.set_b_to_operation()
 
     def clicked_button_convert(self):
+        """
+        Funkcja odpowiedzialna za przekształcenie wyrażenia.
+        :return:
+        """
         self.experssion = self.text_box.text()
         self.experssion = self.experssion.upper()
         print(self.experssion, "   ", self.from_operation, "->", self.to_operation)

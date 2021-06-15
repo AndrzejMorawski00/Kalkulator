@@ -2,12 +2,19 @@ import Converter_Expression
 
 
 class Programmer_Expression:
+    """
+    Konstruktor
+    """
 
     def __init__(self, expression, system):
         self.expression = expression
         self.system = system
 
     def translate_expression(self):
+        """
+        Funkcja odpowiedzialna za przekształcenie wyrażenia.
+        :return:
+        """
         self.expression = self.expression.replace("×", "*")
         self.expression = self.expression.replace("÷", "/")
         self.expression = self.expression.replace("AND", "&")
@@ -16,6 +23,10 @@ class Programmer_Expression:
         self.expression = self.expression.replace("NOT", "~")
 
     def get_expression(self):
+        """
+        Funkcja odpowiedzialna za zwrócenie wartości wyrażenia.
+        :return:
+        """
 
         new_expression = Converter_Expression.Converter_Expression(self.expression,"10",self.system)
         new_expression.translate_expression()
@@ -24,10 +35,18 @@ class Programmer_Expression:
         return str(self.expression)
 
     def get_system(self):
+        """
+        Funkcja odpowiedzialna za zwrócenie wartości systemu.
+        :return:
+        """
         print(self.system)
         return str(self.system)
 
     def check_system(self):
+        """
+        Funkcja odpowiedzialna za sprawdzenie poprawności systemu.
+        :return:
+        """
 
         system_dict = {
             "0": "2", "1": "2",
@@ -48,6 +67,10 @@ class Programmer_Expression:
                 pass
 
     def evaluate_expression(self):
+        """
+        Funkcja odpowiedzialna za ewaluację wyrażenia.
+        :return:
+        """
 
         self.translate_expression()
         self.check_system()
@@ -74,12 +97,22 @@ class Programmer_Expression:
         self.evaluate_bit_operations()
 
     def evaluate_bit_operations(self):
+        """
+        Funkcja odpowiedzialna za ewaluację wyrażenia z operacjiami bitowymi.
+        :return:
+        """
         try:
             self.expression = str(eval(self.expression))
         except:
             self.expression = "ERROR"
 
     def update(self, expression, system):
+        """
+        Funkcja odpowiedzialna za aktualizację wyrażenia.
+        :param expression:
+        :param system:
+        :return:
+        """
         self.expression = expression
         self.system = system
 

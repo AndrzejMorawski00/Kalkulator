@@ -8,6 +8,9 @@ class Operation_Window(QMainWindow):
     got_operation = QtCore.pyqtSignal(str)
 
     def __init__(self):
+        """
+        Konstruktor
+        """
         super(Operation_Window, self).__init__()
         self.button_height = 70
         self.button_width = 120
@@ -20,6 +23,10 @@ class Operation_Window(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        """
+        Funkcja odpowiedzialna za tworzenie interfejsu graficznego.
+        :return:
+        """
 
         # First column
 
@@ -59,5 +66,10 @@ class Operation_Window(QMainWindow):
         self.b_xor.clicked.connect(lambda: self.clicked_button_operation("XOR"))
 
     def clicked_button_operation(self, operation):  # Other operations
+        """
+        Funkcja odpowiedzialna za zwrócenie wartości wyrażenia.
+        :param operation:
+        :return:
+        """
         self.got_operation.emit(operation)
 

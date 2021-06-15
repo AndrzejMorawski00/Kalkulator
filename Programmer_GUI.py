@@ -15,6 +15,7 @@ import Programmer_Expression
 class Programmer_GUI(QMainWindow):
 
     def __init__(self):
+        """Konstruktor"""
         super(Programmer_GUI, self).__init__()
         self.button_height = 70
         self.button_width = 120
@@ -34,6 +35,10 @@ class Programmer_GUI(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        """
+        Funkcja odpowiedzialna za tworzenie interfejsu graficznego.
+        :return:
+        """
         self.text_box = QLineEdit(self)
         self.text_box.move(0, self.button_height + 30)
         self.text_box.setFont(QFont('TimesNewRoman', 16))
@@ -277,45 +282,172 @@ class Programmer_GUI(QMainWindow):
         self.b_eq.setGeometry(4 * self.button_width, 9 * self.button_height, self.button_width, self.button_height)
         self.b_eq.clicked.connect(lambda: self.clicked_button_result())
 
+        self.b_a.setDisabled(True)
+        self.b_b.setDisabled(True)
+        self.b_c.setDisabled(True)
+        self.b_d.setDisabled(True)
+        self.b_e.setDisabled(True)
+        self.b_f.setDisabled(True)
+
+        self.b_7.setDisabled(True)
+        self.b_4.setDisabled(True)
+        self.b_1.setDisabled(True)
+
+        self.b_8.setDisabled(True)
+        self.b_5.setDisabled(True)
+        self.b_2.setDisabled(True)
+        self.b_0.setDisabled(True)
+
+        self.b_9.setDisabled(True)
+        self.b_6.setDisabled(True)
+        self.b_3.setDisabled(True)
+
         self.show()
 
     def go_standard_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Standard_GUI.Standard_GUI()
         self.new_window.show()
         self.close()
 
     def go_scientific_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Scientific_GUI.Scientific_GUI()
         self.new_window.show()
         self.close()
 
     def go_converter_calculator(self):
+        """
+        Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Converter_GUI.Converter_GUI()
         self.new_window.show()
         self.close()
 
     def clicked_button_ans(self):
+        """
+        Funkcja odpowiedzialna za wyświetlanie wartosci ANS na ekranie.
+        :return:
+        """
         print("ANS val: ", self.ans_val)
         if len(self.experssion + self.ans_val) < 49:
             self.experssion += self.ans_val
         self.text_box.setText(self.experssion)
 
     def clicked_button_system(self, arg):
+        """
+        Funkcja odpowiedzialna za przydzielenie systemu.
+        :param arg:
+        :return:
+        """
         self.system = arg
         print(self.system)
         self.set_button_operation()
 
     def set_button_operation(self):
+        """
+        Funkcja odpowiedzialna za wyświetlenie wybranego systemu na ekranie.
+        :return:
+        """
         if self.system == "16":
             self.b_system.setText("HEX")
+            self.b_a.setDisabled(False)
+            self.b_b.setDisabled(False)
+            self.b_c.setDisabled(False)
+            self.b_d.setDisabled(False)
+            self.b_e.setDisabled(False)
+            self.b_f.setDisabled(False)
+
+            self.b_7.setDisabled(False)
+            self.b_4.setDisabled(False)
+            self.b_1.setDisabled(False)
+
+            self.b_8.setDisabled(False)
+            self.b_5.setDisabled(False)
+            self.b_2.setDisabled(False)
+            self.b_0.setDisabled(False)
+
+            self.b_9.setDisabled(False)
+            self.b_6.setDisabled(False)
+            self.b_3.setDisabled(False)
+
         elif self.system == "10":
             self.b_system.setText("DEC")
+            self.b_a.setDisabled(True)
+            self.b_b.setDisabled(True)
+            self.b_c.setDisabled(True)
+            self.b_d.setDisabled(True)
+            self.b_e.setDisabled(True)
+            self.b_f.setDisabled(True)
+
+            self.b_7.setDisabled(False)
+            self.b_4.setDisabled(False)
+            self.b_1.setDisabled(False)
+
+            self.b_8.setDisabled(False)
+            self.b_5.setDisabled(False)
+            self.b_2.setDisabled(False)
+            self.b_0.setDisabled(False)
+
+            self.b_9.setDisabled(False)
+            self.b_6.setDisabled(False)
+            self.b_3.setDisabled(False)
         elif self.system == "8":
+            self.b_a.setDisabled(True)
+            self.b_b.setDisabled(True)
+            self.b_c.setDisabled(True)
+            self.b_d.setDisabled(True)
+            self.b_e.setDisabled(True)
+            self.b_f.setDisabled(True)
+
+            self.b_7.setDisabled(False)
+            self.b_4.setDisabled(False)
+            self.b_1.setDisabled(False)
+
+            self.b_8.setDisabled(True)
+            self.b_5.setDisabled(False)
+            self.b_2.setDisabled(False)
+            self.b_0.setDisabled(False)
+
+            self.b_9.setDisabled(True)
+            self.b_6.setDisabled(False)
+            self.b_3.setDisabled(False)
             self.b_system.setText("OCT")
         else:
             self.b_system.setText("BIN")
+            self.b_a.setDisabled(True)
+            self.b_b.setDisabled(True)
+            self.b_c.setDisabled(True)
+            self.b_d.setDisabled(True)
+            self.b_e.setDisabled(True)
+            self.b_f.setDisabled(True)
+
+            self.b_7.setDisabled(True)
+            self.b_4.setDisabled(True)
+            self.b_1.setDisabled(False)
+
+            self.b_8.setDisabled(True)
+            self.b_5.setDisabled(True)
+            self.b_2.setDisabled(True)
+            self.b_0.setDisabled(False)
+
+            self.b_9.setDisabled(True)
+            self.b_6.setDisabled(True)
+            self.b_3.setDisabled(True)
 
     def clicked_button_operation(self, arg):  # Other operations
+        """
+        Funkcja odpowiedzialna za wykonwyanie operacji(DEL, CE, C) na wyrażeniu.
+        :param arg:
+        :return:
+        """
         if arg == "DEL":
             self.experssion = self.experssion[0: len(self.experssion) - 1]
         elif arg == "C":
@@ -327,28 +459,56 @@ class Programmer_GUI(QMainWindow):
         self.text_box.setText(self.experssion)
 
     def update_expression(self, arg):
+        """
+        Funkcja odpowiedzialna za aktualizowanie wyrażenia.
+        :param arg:
+        :return:
+        """
         if len(self.experssion + arg) < 49:
             self.experssion += arg
         self.text_box.setText(self.experssion)
 
     def clicked_button_new_button(self, arg):
+        """
+        Funkcja dodatkowa dla dwóch przycisków bez żadnych funkcji.
+        :param arg:
+        :return:
+        """
         print("Clicked new button!!! ", arg)
 
     def clicked_button_expression(self, arg):
+        """
+        Funkcja odpowiezialna za wyświetlanie wyrażenia na ekranie.
+        :param arg:
+        :return:
+        """
         if len(self.experssion + arg) < 49:
             self.experssion += arg
 
         self.text_box.setText(self.experssion)
 
     def show_operation(self):
+        """
+        Funkcja odpowiedzialna za wywołanie funkcji set_operation.
+        :return:
+        """
         self.operation_window.show()
 
     def set_operation(self, operation):
+        """
+        Funkcja odpowiedzialna za wstawienie do wyrażenia operacji.
+        :param operation:
+        :return:
+        """
         if len(self.experssion + operation) < 49:
             self.experssion += operation
         self.text_box.setText(self.experssion)
 
     def clicked_button_result(self):  # EQ button
+        """
+         Funkcja odpowiedzialna za ewaluację wyrażenia oraz wyświetlenie jej na ekranie.
+        :return:
+        """
         if self.first_use is False:
             self.new_class = Programmer_Expression.Programmer_Expression(self.experssion, self.system)
             self.new_class.evaluate_expression()

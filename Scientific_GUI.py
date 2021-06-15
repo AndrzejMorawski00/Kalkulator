@@ -13,6 +13,9 @@ import Converter_GUI
 class Scientific_GUI(QMainWindow):
 
     def __init__(self):
+        """
+        Konstruktor
+        """
         self.button_height = 70
         self.button_width = 120
         self.font = QFont('TimesNewRoman', 13)
@@ -29,6 +32,10 @@ class Scientific_GUI(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        """
+         Funkcja odpowiedzialna za tworzenie interfejsu graficznego.
+        :return:
+        """
         self.text_box = QLineEdit(self)
         self.text_box.move(0, self.button_height + 30)
         self.text_box.setFont(QFont('TimesNewRoman', 16))
@@ -313,25 +320,37 @@ class Scientific_GUI(QMainWindow):
 
         # Functions
     def go_standard_calculator(self):
+        """
+         Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Standard_GUI.Standard_GUI()
         self.new_window.show()
         self.close()
 
     def go_programmer_calculator(self):
+        """
+         Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Programmer_GUI.Programmer_GUI()
         self.new_window.show()
         self.close()
 
     def go_converter_calculator(self):
+        """
+         Funkcja odpowiedzialna za uruchamianie nowego okna.
+        :return:
+        """
         self.new_window = Converter_GUI.Converter_GUI()
         self.new_window.show()
         self.close()
 
     def clicked_button_switch(self):  # Default switch is False
-
-        # logx  -> log base 10 of x
-        # lnx   -> log base e of x
-        # logxy -> log base x of y
+        """
+        Funkcja odpowiedzialna za zmianę przycisków po naciśnięciu przycisku "switch"
+        :return:
+        """
 
         if (self.switch == True):
             self.switch = False
@@ -374,7 +393,12 @@ class Scientific_GUI(QMainWindow):
             self.b_ln.show()
             self.b_e_x.hide()
 
-    def clicked_button_operation(self, arg):  # Other operations
+    def clicked_button_operation(self, arg):
+        """
+         Funkcja odpowiedzialna za wykonwyanie operacji(DEL, CE, C) na wyrażeniu.
+        :param arg:
+        :return:
+        """
         if (len(self.experssion) != 0):
             if (arg == "DEL"):
                 self.experssion = self.experssion[0: len(self.experssion) - 1]
@@ -386,6 +410,11 @@ class Scientific_GUI(QMainWindow):
         self.text_box.setText((self.experssion))
 
     def clicked_button_expression(self, arg):
+        """
+        Funkcja odpowiedzialna za tworzenie wyrażenia oraz wyświetlanie go w aplikacji.
+        :param arg:
+        :return:
+        """
         print("Clicked expression!!! " + arg)
         if (len(self.experssion) < 49):
             self.experssion += arg
@@ -393,6 +422,10 @@ class Scientific_GUI(QMainWindow):
         self.text_box.setText(self.experssion)
 
     def clicked_button_abs(self):
+        """
+        Funkcja odpowiedzialna za tworzenie wartości bezwzględnej z wyrażenia.
+        :return:
+        """
 
         if self.result != "":
             abs_val = self.result
@@ -405,12 +438,20 @@ class Scientific_GUI(QMainWindow):
             pass
 
     def clicked_button_ans(self):  # Ans button
+        """
+        Funkcja odpowiedzialna za wyświetlanie wartości ANS na ekranie.
+        :return:
+        """
         print("ANS val:", self.ans_val)
         if len(self.experssion + self.ans_val) < 49:
             self.experssion += self.ans_val
         self.text_box.setText(self.experssion)
 
     def clicked_button_result(self):  # EQ button
+        """
+        Funkcja odpowiedzialna za ewaluację wyrażenia oraz wyświetlenie jej na ekranie.
+        :return:
+        """
         if (self.first_use == False):
             self.expression_class = Scientific_Expression.Scientific_Expression(self.experssion)
             self.expression_class.get_expression()
