@@ -19,7 +19,7 @@ class Operation_Window(QMainWindow):
         self.operation = ""
 
         self.setGeometry(900, 200, 4 * self.button_width, 1 * self.button_height)
-        self.setWindowTitle("Programmer Calculator")
+        self.setWindowTitle("Operation Window")
         self.initUI()
 
     def initUI(self):

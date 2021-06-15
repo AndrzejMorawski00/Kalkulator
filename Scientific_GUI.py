@@ -28,7 +28,7 @@ class Scientific_GUI(QMainWindow):
 
         super(Scientific_GUI, self).__init__()
         self.setGeometry(200, 200, 5 * self.button_width, 10 * self.button_height)
-        self.setWindowTitle("Calculator")
+        self.setWindowTitle("Scientific Calculator")
         self.initUI()
 
     def initUI(self):

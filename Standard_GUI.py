@@ -30,7 +30,7 @@ class Standard_GUI(QMainWindow):
         self.first_use = False
 
         self.setGeometry(200, 200, 4 * self.button_width, 9 * self.button_height - 10)
-        self.setWindowTitle("Calculator")
+        self.setWindowTitle("Standard Calculator")
         self.initUI()
 
     def initUI(self):
